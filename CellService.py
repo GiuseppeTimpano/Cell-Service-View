@@ -8,6 +8,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
 
 import CellService_analysis
 import CellService_processing
+import CellService_analysis_similarity
 
 import numpy as np
 import skimage.io
@@ -106,17 +107,21 @@ class CellService(QMainWindow):
 
         # Analysis menu
         analysisMenu = mainMenu.addMenu("Analysis")
-        self.intensityAnalysis = CellService_analysis.CellServiceIntensityAnalysis(self)
+        #self.intensityAnalysis = CellService_analysis.CellServiceIntensityAnalysis(self)
 
         # Intensity analysis
-        intensityAnalysisAction = QAction('&Intensity analysis', self)
+        intensityAnalysisAction = QAction('&Similarity analysis', self)
         intensityAnalysisAction.setStatusTip("Execute intensity analysis")
-        intensityAnalysisAction.triggered.connect(self.intensityAnalysis.show)
+        intensityAnalysisAction.triggered.connect(self.analisysWindow)
         analysisMenu.addAction(intensityAnalysisAction)
     
     def window2(self):
         self.intensityAnalysis = CellService_processing.CellServiceBinaryProcessing(self)
         self.intensityAnalysis.show()
+        
+    def analisysWindow(self):
+        self.analysis = CellService_analysis_similarity.CellServiceAnalysisSimilarity(self)
+        self.analysis.show()
         
     def set_image(self, np_array, qt_label, channel, mask=False):
 
