@@ -34,32 +34,38 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Original_Label.setStyleSheet("border: 3px solid red")
         self.principalLayout.addWidget(self.Original_Label, 0, 0)
         self.Original_Label.resize(128, 128)
+        self.Original_Label.setScaledContents(True)
         
         # create a filtred label
         self.Filtred_Label = QtWidgets.QLabel(self)
         self.Filtred_Label.setStyleSheet("border: 3px solid red")
         self.principalLayout.addWidget(self.Filtred_Label, 1, 0)
         self.Filtred_Label.resize(128, 128)
+        self.Filtred_Label.setScaledContents(True)
         
         self.Original_Label1 = QtWidgets.QLabel(self)
         self.Original_Label1.setStyleSheet("border: 3px solid green")
         self.principalLayout.addWidget(self.Original_Label1, 0, 1)
         self.Original_Label1.resize(128, 128)
+        self.Original_Label1.setScaledContents(True)
         
         self.Filtred_Label1 = QtWidgets.QLabel(self)
         self.Filtred_Label1.setStyleSheet("border: 3px solid green")
         self.principalLayout.addWidget(self.Filtred_Label1, 1, 1)
         self.Filtred_Label1.resize(128, 128)
+        self.Filtred_Label1.setScaledContents(True)
         
         self.Original_Label2 = QtWidgets.QLabel(self)
         self.Original_Label2.setStyleSheet("border: 3px solid blue")
         self.principalLayout.addWidget(self.Original_Label2, 0, 2)
         self.Original_Label2.resize(128, 128)
+        self.Original_Label2.setScaledContents(True)
         
         self.Filtred_Label2 = QtWidgets.QLabel(self)
         self.Filtred_Label2.setStyleSheet("border: 3px solid blue")
         self.principalLayout.addWidget(self.Filtred_Label2, 1, 2)
         self.Filtred_Label2.resize(128, 128)
+        self.Filtred_Label2.setScaledContents(True)
         
         self.set_all_images()
         self.maximize_window()
