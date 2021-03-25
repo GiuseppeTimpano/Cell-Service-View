@@ -6,6 +6,7 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt, pyqtSlot
 import skimage.io
+import skimage.morphology
 import numpy as np
 from skimage import filters
 
@@ -15,9 +16,9 @@ class CellServiceBinaryProcessing(QMainWindow):
         super().__init__()
         self.parent = parent
         
-        
-        self._createToolBars()
         self.init_ui()
+        self._createToolBars()
+        
 
     def init_ui(self):
         self.StatBar = self.statusBar()
@@ -66,7 +67,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Filtred_Label2.resize(128, 128)
         self.Filtred_Label2.setScaledContents(True)
         
-        self.set_all_images()
+        
         self.maximize_window()
         
     def maximize_window(self):
@@ -133,11 +134,9 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.redRadioButton = QRadioButton('RED')
         self.redRadioButton.setStyleSheet(self.new_btn_ss5)
         self.editToolBar.addWidget(self.redRadioButton)
-        self.editToolBar.addSeparator()
         self.greenRadioButton = QRadioButton('GREEN')
         self.greenRadioButton.setStyleSheet(self.new_btn_ss5)
         self.editToolBar.addWidget(self.greenRadioButton)
-        self.editToolBar.addSeparator()
         self.blueRadioButton= QRadioButton('BLUE')
         self.blueRadioButton.setStyleSheet(self.new_btn_ss5)
         self.editToolBar.addWidget(self.blueRadioButton)
@@ -149,10 +148,11 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.editToolBar.addWidget(self.Apply)
         
         self.editToolBar.addSeparator()
-        self.Next = QPushButton('CLICK FOR SEGMENTATION')
+        self.Next = QPushButton('NEXT STEP')
         self.Next.setStyleSheet(self.new_btn)
         self.Next.clicked.connect(self.segmentation)
         self.editToolBar.addWidget(self.Next)
+        self.set_all_images()
     
     def Automatic_threshold(self):
         self.soglia1=0
@@ -178,7 +178,6 @@ class CellServiceBinaryProcessing(QMainWindow):
         if (valore2==0):
             mask=img>valore1
             binarymat[mask]=1
-        print(binarymat)
         return binarymat
     
     def runIntensityBinarization(self):
@@ -198,8 +197,11 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.setWindowTitle("Segmentation processing")
         self.removeToolBar(self.editToolBar)
         self.Filtred_Label.setText(" ")
+        self.parent.set_image(self.parent.red_mask, self.Original_Label, "red", mask=True)
         self.Filtred_Label1.setText(" ")
+        self.parent.set_image(self.parent.green_mask, self.Original_Label1, "green", mask=True)
         self.Filtred_Label2.setText(" ")
+        self.parent.set_image(self.parent.blue_mask, self.Original_Label2, "blue", mask=True)
         self.editToolBar2 = QtWidgets.QToolBar("Edit", self)
         self.editToolBar2.setFixedSize(2000, 100)
         self.addToolBar(self.editToolBar2)
@@ -208,6 +210,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.editToolBar2.addWidget(self.Label_Raggio)
         self.Raggio = QDoubleSpinBox()
         self.Raggio.setFixedSize(80,40)
+        self.Raggio.setMaximum(255.000)
         self.editToolBar2.addWidget(self.Raggio)
         self.editToolBar2.addSeparator()
         
@@ -215,13 +218,105 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.editToolBar2.addWidget(self.removeCheck)
         self.erosionCheck = QCheckBox("Erosion")
         self.editToolBar2.addWidget(self.erosionCheck)
+        self.noiseCheck = QCheckBox("Remove Noise")
+        self.editToolBar2.addWidget(self.noiseCheck)
+        self.editToolBar2.addSeparator()
+        
+        self.redRadioButton2 = QRadioButton('RED')
+        self.redRadioButton2.setStyleSheet(self.new_btn_ss5)
+        self.editToolBar2.addWidget(self.redRadioButton2)
+        self.greenRadioButton2 = QRadioButton('GREEN')
+        self.greenRadioButton2.setStyleSheet(self.new_btn_ss5)
+        self.editToolBar2.addWidget(self.greenRadioButton2)
+        self.blueRadioButton2= QRadioButton('BLUE')
+        self.blueRadioButton2.setStyleSheet(self.new_btn_ss5)
+        self.editToolBar2.addWidget(self.blueRadioButton2)
         
         self.editToolBar2.addSeparator()
-        self.Return = QPushButton('CLICK FOR BINARIZE')
+        self.Apply2 = QPushButton('APPLY')
+        self.Apply2.setStyleSheet(self.new_btn_ss5)
+        self.Apply2.clicked.connect(self.apply_segmentation)
+        self.editToolBar2.addWidget(self.Apply2)
+        
+        self.editToolBar2.addSeparator()
+        self.Save = QPushButton('SAVE AND VIEW')
+        self.Save.setStyleSheet(self.new_btn_ss5)
+        self.Save.clicked.connect(self.binaryproject)
+        self.editToolBar2.addWidget(self.Save)
+        
+        self.editToolBar2.addSeparator()
+        self.Return = QPushButton('COME BACK')
         self.Return.setStyleSheet(self.new_btn)
         self.Return.clicked.connect(self.binaryproject)
         self.editToolBar2.addWidget(self.Return)
-        
+    
+    def apply_segmentation(self):
+        self.mask_red=None
+        self.mask_green=None
+        self.mask_blue=None
+        entry=False
+        if self.removeCheck.isChecked() or self.erosionCheck.isChecked() or self.noiseCheck.isChecked():
+            entry=True
+        if entry:
+            if self.redRadioButton2.isChecked():
+                if self.erosionCheck.isChecked():
+                    self.mask_red=skimage.morphology.erosion(self.parent.red_mask)
+                if self.removeCheck.isChecked():
+                    raggio=self.Raggio.value()
+                    if(self.mask_red is not None):
+                        self.mask_red= skimage.morphology.remove_small_objects(self.mask_red.astype(np.bool), raggio)
+                    else:
+                        self.mask_red= skimage.morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
+                if self.noiseCheck.isChecked():
+                    if(self.mask_red is not None):
+                        self.mask_red=skimage.morphology.closing(self.mask_red)
+                    else:
+                        self.mask_red=skimage.morphology.closing(self.parent.red_mask)
+                self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+            if self.greenRadioButton2.isChecked():
+                if self.erosionCheck.isChecked():
+                    self.mask_green=skimage.morphology.erosion(self.parent.green_mask)
+                if self.removeCheck.isChecked():
+                    raggio=self.Raggio.value()
+                    if(self.mask_green is not None):
+                        self.mask_green= skimage.morphology.remove_small_objects(self.mask_green.astype(np.bool), raggio)
+                    else:
+                        self.mask_green= skimage.morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
+                if self.noiseCheck.isChecked():
+                    if(self.mask_green is not None):
+                        self.mask_green=skimage.morphology.closing(self.mask_green)
+                    else:
+                        self.mask_green=skimage.morphology.closing(self.parent.green_mask)
+                self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+            if self.blueRadioButton2.isChecked():
+                if self.erosionCheck.isChecked():
+                    self.mask_blue=skimage.morphology.erosion(self.parent.blue_mask)
+                if self.removeCheck.isChecked():
+                    raggio=self.Raggio.value()
+                    if(self.mask_blue is not None):
+                        self.mask_blue= skimage.morphology.remove_small_objects(self.mask_blue.astype(np.bool), raggio)
+                    else:
+                        self.mask_blue= skimage.morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
+                if self.noiseCheck.isChecked():
+                    if(self.mask_blue is not None):
+                        self.mask_blue=skimage.morphology.closing(self.mask_blue)
+                    else:
+                        self.mask_blue=skimage.morphology.closing(self.parent.blue_mask)
+                self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
+        else:
+            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        entry=False
+    
+    def save(self):
+        self.parent.red_mask=self.mask_red
+        self.parent.green_mask=self.mask_green
+        self.parent.blue_mask=self.mask_blue
+        self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+        self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+        self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        self.binaryproject()
         
     def binaryproject(self):
         self.removeToolBar(self.editToolBar2)
