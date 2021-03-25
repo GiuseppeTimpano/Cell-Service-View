@@ -218,7 +218,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.editToolBar2.addWidget(self.removeCheck)
         self.erosionCheck = QCheckBox("Erosion")
         self.editToolBar2.addWidget(self.erosionCheck)
-        self.noiseCheck = QCheckBox("Remove Noise")
+        self.noiseCheck = QCheckBox("Closing")
         self.editToolBar2.addWidget(self.noiseCheck)
         self.editToolBar2.addSeparator()
         
