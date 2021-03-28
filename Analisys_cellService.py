@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtGui import QColor
+import numpy as np
 
 class Ui_Analisys_cellService(QMainWindow):
     
@@ -41,40 +42,40 @@ class Ui_Analisys_cellService(QMainWindow):
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         self.principal_layout.setObjectName("principal_layout")
         
-        # set RGB Label and add the label to grid layout
-        self.RGB_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.RGB_Label.setTabletTracking(True)
-        self.RGB_Label.setStyleSheet("border: 2px solid red")
-        self.RGB_Label.setFrameShape(QtWidgets.QFrame.Panel)
-        self.RGB_Label.setLineWidth(2)
-        self.RGB_Label.setText("")
-        self.RGB_Label.setScaledContents(True)
-        self.RGB_Label.setObjectName("RGB_Label")
-        self.principal_layout.addWidget(self.RGB_Label, 0, 0, 1, 1)
-        
-        # set BLUE Label and add the label to grid layout
-        self.BLUE_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.BLUE_Label.setStyleSheet("border: 2px solid black")
-        self.BLUE_Label.setText("")
-        self.BLUE_Label.setScaledContents(True)
-        self.BLUE_Label.setObjectName("BLUE_Label")
-        self.principal_layout.addWidget(self.BLUE_Label, 1, 1, 1, 1)
-        
-        # set GREEN Label and add the label to grid layout
-        self.GREEN_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.GREEN_Label.setStyleSheet("border: 2px solid blue")
-        self.GREEN_Label.setText("")
-        self.GREEN_Label.setScaledContents(True)
-        self.GREEN_Label.setObjectName("GREEN_Label")
-        self.principal_layout.addWidget(self.GREEN_Label, 1, 0, 1, 1)
-        
         # set RED Label and add the label to grid layout
         self.RED_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.RED_Label.setStyleSheet("border: 2px solid green")
+        self.RED_Label.setTabletTracking(True)
+        self.RED_Label.setStyleSheet("border: 2px solid red")
+        self.RED_Label.setFrameShape(QtWidgets.QFrame.Panel)
+        self.RED_Label.setLineWidth(2)
         self.RED_Label.setText("")
         self.RED_Label.setScaledContents(True)
         self.RED_Label.setObjectName("RED_Label")
-        self.principal_layout.addWidget(self.RED_Label, 0, 1, 1, 1)
+        self.principal_layout.addWidget(self.RED_Label, 0, 0, 1, 1)
+        
+        # set BLUE Label and add the label to grid layout
+        self.RGB_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.RGB_Label.setStyleSheet("border: 2px solid black")
+        self.RGB_Label.setText("")
+        self.RGB_Label.setScaledContents(True)
+        self.RGB_Label.setObjectName("RGB_Label")
+        self.principal_layout.addWidget(self.RGB_Label, 1, 1, 1, 1)
+        
+        # set GREEN Label and add the label to grid layout
+        self.BLUE_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.BLUE_Label.setStyleSheet("border: 2px solid blue")
+        self.BLUE_Label.setText("")
+        self.BLUE_Label.setScaledContents(True)
+        self.BLUE_Label.setObjectName("BLUE_Label")
+        self.principal_layout.addWidget(self.BLUE_Label, 1, 0, 1, 1)
+        
+        # set RED Label and add the label to grid layout
+        self.GREEN_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.GREEN_Label.setStyleSheet("border: 2px solid green")
+        self.GREEN_Label.setText("")
+        self.GREEN_Label.setScaledContents(True)
+        self.GREEN_Label.setObjectName("GREEN_Label")
+        self.principal_layout.addWidget(self.GREEN_Label, 0, 1, 1, 1)
         
     def set_biologicalWidget(self):
         self.biological_widget = QtWidgets.QWidget(self.principal_widget)
@@ -361,6 +362,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "")
         self.red_blue_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_blue_buttonS.setText("")
+        self.red_blue_buttonS.clicked.connect(self.similarity_buttonRB)
         icon5 = QtGui.QIcon()
         icon5.addPixmap(QtGui.QPixmap("icon 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_blue_buttonS.setIcon(icon5)
@@ -390,6 +392,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.red_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_green_buttonS.setText("")
+        self.red_green_buttonS.clicked.connect(self.similarity_buttonRG)
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_green_buttonS.setIcon(icon6)
@@ -418,6 +421,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.blue_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.blue_green_buttonS.setText("")
+        self.blue_green_buttonS.clicked.connect(self.similarity_buttonGB)
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap("icon 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.blue_green_buttonS.setIcon(icon7)
@@ -541,6 +545,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.actionPre_processed_image_analisys = QtWidgets.QAction()
         self.actionPre_processed_image_analisys.setObjectName("actionPre_processed_image_analisys")
         self.actionPre_processed_image_analisys.setText("Analysis of pre-processed images")
+        self.actionPre_processed_image_analisys.triggered.connect(self.set_all_images)
         self.actionNew_images_analisys = QtWidgets.QAction()
         self.actionNew_images_analisys.setObjectName("actionNew_images_analisys")
         self.actionNew_images_analisys.setText("New images analisys")
@@ -562,8 +567,58 @@ class Ui_Analisys_cellService(QMainWindow):
         return shadow
     
     def set_all_images(self):
-        self.parent.set_image(self.parent.red_image, self.Label_Red, "red", mask=False)
-        self.parent.set_image(self.parent.green_image, self.Label_Green, "green", mask=False)
-        self.parent.set_image(self.parent.blue_image, self.Label_Blue, "blue", mask=False)
+        self.parent.set_image(self.parent.red_image, self.RED_Label, "red", mask=False)
+        self.parent.set_image(self.parent.green_image, self.GREEN_Label, "green", mask=False)
+        self.parent.set_image(self.parent.blue_image, self.BLUE_Label, "blue", mask=False)
+    
+    def two_similarity_overlap(self, image1, image2, edit):
+        similarity = 0
+        overlapping = np.zeros_like(image1)
+        
+        for i in range(image1.shape[0]):
+            for j in range(image1.shape[1]):
+                if (image1[i][j]==image2[i][j]):
+                    similarity += 1
+                    overlapping[i][j]=1
+        edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
+        return overlapping
+    
+    def runSimilarity(self, buttonPressed):
+        if self.red_blue_buttonS.isChecked():
+            self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask), self.RGB_Label, "red", mask=True)
+        elif self.red_green_buttonS.isChecked():
+            self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.green_mask), self.RGB_Label, "green", mask=True)
+        elif self.blue_green_buttonS.isChecked():
+            self.parent.set_image(self.two_similarity_overlap(self.parent.blue_mask, self.parent.green_mask), self.RGB_Label, "blue", mask=True)
+        elif self.total_buttonS.isChecked():
+            self.parent.set_image(self.AllimagesOverlap(), self.RGB_Label, "blue", mask=True)
+        else:
+            pass
+        self.RGB_Label.setScaledContents(True)
+    
+    def similarity_buttonRB(self):
+        self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask, self.RB_PercentS_edit), self.RGB_Label, "red", mask=True)
+    
+    def similarity_buttonRG(self):
+        self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.green_mask, self.RG_PercentS_edit), self.RGB_Label, "green", mask=True)
+    
+    def similarity_buttonGB(self):
+        self.parent.set_image(self.two_similarity_overlap(self.parent.green_mask, self.parent.blue_mask, self.BG_PercentS_edit), self.RGB_Label, "blue", mask=True)
+    
+    def AllimagesOverlap(self):
+        similarity=0
+        overlapping = np.zeros_like(self.parent.red_mask)
+        for i in range(self.parent.red_mask.shape[0]):
+          for j in range(self.parent.red_mask.shape[1]):
+              if (self.parent.red_mask[i][j]==1 and self.parent.green_mask[i][j]==1 
+                  and self.parent.blue_mask[i][j]==1):
+                          overlapping[i][j]=1
+                          similarity+=1
+                          
+        self.parent.set_image(overlapping, self.Label_Common, "red", mask=True)
+        self.Label_Common.setScaledContents(True)
+        self.Label_Similarity.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
+        
+
 
 
