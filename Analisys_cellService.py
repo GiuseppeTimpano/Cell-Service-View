@@ -5,8 +5,10 @@ from PyQt5.QtGui import QColor
 
 class Ui_Analisys_cellService(QMainWindow):
     
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
+        
+        self.parent = parent
         
         self.setupUi()
         

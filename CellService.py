@@ -120,7 +120,7 @@ class CellService(QMainWindow):
         self.intensityAnalysis.show()
         
     def analisysWindow(self):
-        self.analysis = Analisys_cellService.Ui_Analisys_cellService()
+        self.analysis = Analisys_cellService.Ui_Analisys_cellService(self)
         self.analysis.show()
         
     def set_image(self, np_array, qt_label, channel, mask=False):
