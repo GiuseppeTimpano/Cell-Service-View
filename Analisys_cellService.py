@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtGui import QColor
 
 class Ui_Analisys_cellService(QMainWindow):
     
@@ -9,7 +10,7 @@ class Ui_Analisys_cellService(QMainWindow):
         
         self.setupUi()
         
-        self.set_numberWidget()
+        self.set_numberWidget()       
         
         self.set_biologicalWidget()
         
@@ -79,6 +80,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biological_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 30px;")
         self.biological_widget.setObjectName("biological_widget")
+        self.biological_widget.setGraphicsEffect(self.applyShadow())
         self.red_buttonBC = QtWidgets.QPushButton(self.biological_widget)
         self.red_buttonBC.setGeometry(QtCore.QRect(10, 40, 41, 41))
         self.red_buttonBC.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -92,9 +94,13 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.red_buttonBC.setGraphicsEffect(self.applyShadow())
         self.red_buttonBC.setText("")
         self.red_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image biological contents</span></p></body></html>")
         self.red_buttonBC.setStatusTip("RED image biological contents")
@@ -116,9 +122,13 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.green_buttonBC.setGraphicsEffect(self.applyShadow())
         self.green_buttonBC.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("icon bio 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -140,10 +150,13 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
-"    border-style: inset;\n"
 "}")
+        self.blue_buttonBC.setGraphicsEffect(self.applyShadow())
         self.blue_buttonBC.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("icon bio 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -165,9 +178,11 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
-"    border-style: inset;\n"
 "}")
         self.rgb_buttonBC.setText("")
         icon3 = QtGui.QIcon()
@@ -177,6 +192,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.rgb_buttonBC.setObjectName("rgb_buttonBC")
         self.rgb_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RGB image biological contents</span></p></body></html>")
         self.rgb_buttonBC.setStatusTip("RGB image biological contents")
+        self.rgb_buttonBC.setGraphicsEffect(self.applyShadow())
         self.Red_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
         self.Red_PercentBC_edit.setGeometry(QtCore.QRect(70, 50, 71, 31))
         self.Red_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -247,6 +263,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 30px;")
         self.number_widget.setObjectName("number_widget")
+        #self.number_widget.setGraphicsEffect(self.applyShadow())
         self.number_cells_edit = QtWidgets.QLineEdit(self.number_widget)
         self.number_cells_edit.setGeometry(QtCore.QRect(70, 50, 71, 31))
         self.number_cells_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -276,6 +293,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    padding: 6px;\n"
 "font: 14pt \"Varela\" bold;\n"
 "color: rgb(255, 255, 255);")
+
         self.numbers_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.numbers_edit.setReadOnly(True)
         self.numbers_edit.setObjectName("numbers_edit")
@@ -293,15 +311,18 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
-"    border-style: inset;\n"
-"}")
+"}")   
         self.number_button.setText("")
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap("icon n.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.number_button.setIcon(icon4)
         self.number_button.setIconSize(QtCore.QSize(60, 35))
+        self.number_button.setGraphicsEffect(self.applyShadow())
         self.number_button.setObjectName("number_button")
         self.number_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of cells</span></p></body></html>")
         self.number_button.setStatusTip("Calculate the number of cells")
@@ -312,6 +333,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.similarity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 30px;")
         self.similarity_widget.setObjectName("similarity_widget")
+        self.similarity_widget.setGraphicsEffect(self.applyShadow())
         self.red_blue_buttonS = QtWidgets.QPushButton(self.similarity_widget)
         self.red_blue_buttonS.setGeometry(QtCore.QRect(10, 40, 41, 41))
         self.red_blue_buttonS.setMouseTracking(True)
@@ -328,10 +350,14 @@ class Ui_Analisys_cellService(QMainWindow):
 "    padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}\n"
 "")
+        self.red_blue_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_blue_buttonS.setText("")
         icon5 = QtGui.QIcon()
         icon5.addPixmap(QtGui.QPixmap("icon 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -354,9 +380,13 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.red_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_green_buttonS.setText("")
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -378,10 +408,13 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
-"    border-style: inset;\n"
 "}")
+        self.blue_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.blue_green_buttonS.setText("")
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap("icon 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -403,10 +436,13 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
-"    border-style: inset;\n"
 "}")
+        self.total_buttonS.setGraphicsEffect(self.applyShadow())
         self.total_buttonS.setText("")
         icon8 = QtGui.QIcon()
         icon8.addPixmap(QtGui.QPixmap("icon 4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -514,6 +550,14 @@ class Ui_Analisys_cellService(QMainWindow):
         self.file_menu.addAction(self.actionNew_images_analysis)
         self.menubar.addAction(self.file_menu.menuAction())
         self.menubar.addAction(self.help_menu.menuAction())
+        
+    def applyShadow(self):
+        shadow = QtWidgets.QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(40)
+        shadow.setXOffset(3)
+        shadow.setYOffset(3)
+        shadow.setColor(QtGui.QColor(209, 209, 209))
+        return shadow
     
     def set_all_images(self):
         self.parent.set_image(self.parent.red_image, self.Label_Red, "red", mask=False)
