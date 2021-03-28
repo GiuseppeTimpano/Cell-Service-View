@@ -112,6 +112,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.red_buttonBC.setIcon(icon)
         self.red_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.red_buttonBC.setObjectName("red_buttonBC")
+        self.red_buttonBC.clicked.connect(self.set_biologicalRED)
         self.green_buttonBC = QtWidgets.QPushButton(self.biological_widget)
         self.green_buttonBC.setGeometry(QtCore.QRect(10, 100, 41, 41))
         self.green_buttonBC.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -140,6 +141,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.green_buttonBC.setObjectName("green_buttonBC")
         self.green_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image biological contents</span></p></body></html>")
         self.green_buttonBC.setStatusTip("GREEN image biological contents")
+        self.green_buttonBC.clicked.connect(self.set_biologicalGREEN)
         self.blue_buttonBC = QtWidgets.QPushButton(self.biological_widget)
         self.blue_buttonBC.setGeometry(QtCore.QRect(10, 160, 41, 41))
         self.blue_buttonBC.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -161,6 +163,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.blue_buttonBC.setGraphicsEffect(self.applyShadow())
         self.blue_buttonBC.setText("")
+        self.blue_buttonBC.clicked.connect(self.set_biologicalBLUE)
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("icon bio 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.blue_buttonBC.setIcon(icon2)
@@ -622,6 +625,22 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RGB_Label.setScaledContents(True)
         self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
         return overlapping
-
+    
+    def biologicalContents(self, imageMatrix, edit):
+        count = 0;
+        for i in range(imageMatrix.shape[0]):
+            for j in range(imageMatrix.shape[1]):
+                if imageMatrix[i][j] == 1:
+                    count = count+1
+        edit.setText(str(round((count*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
+    
+    def set_biologicalRED(self):
+        self.biologicalContents(self.parent.red_mask, self.Red_PercentBC_edit)
+    
+    def set_biologicalGREEN(self):
+        self.biologicalContents(self.parent.green_mask, self.Green_PercentBC_edit) 
+    
+    def set_biologicalBLUE(self):
+        self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
 
 
