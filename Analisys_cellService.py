@@ -457,6 +457,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.total_buttonS.setObjectName("total_buttonS")
         self.total_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED, GREEN and BLUE similarity</span></p></body></html>")
         self.total_buttonS.setStatusTip("RED, GREEN and BLUE similarity")
+        self.total_buttonS.clicked.connect(self.similarity_buttonRGB)
         self.RB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
         self.RB_PercentS_edit.setGeometry(QtCore.QRect(70, 50, 71, 31))
         self.RB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -605,6 +606,9 @@ class Ui_Analisys_cellService(QMainWindow):
     def similarity_buttonGB(self):
         self.parent.set_image(self.two_similarity_overlap(self.parent.green_mask, self.parent.blue_mask, self.BG_PercentS_edit), self.RGB_Label, "blue", mask=True)
     
+    def similarity_buttonRGB(self):
+        self.parent.set_image(self.AllimagesOverlap(), self.RGB_Label, "green" ,mask=True)
+    
     def AllimagesOverlap(self):
         similarity=0
         overlapping = np.zeros_like(self.parent.red_mask)
@@ -615,10 +619,9 @@ class Ui_Analisys_cellService(QMainWindow):
                           overlapping[i][j]=1
                           similarity+=1
                           
-        self.parent.set_image(overlapping, self.Label_Common, "red", mask=True)
-        self.Label_Common.setScaledContents(True)
-        self.Label_Similarity.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
-        
+        self.RGB_Label.setScaledContents(True)
+        self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
+        return overlapping
 
 
 
