@@ -79,7 +79,7 @@ class Ui_Analisys_cellService(QMainWindow):
         
     def set_biologicalWidget(self):
         self.biological_widget = QtWidgets.QWidget(self.principal_widget)
-        self.biological_widget.setGeometry(QtCore.QRect(20, 310, 171, 281))
+        self.biological_widget.setGeometry(QtCore.QRect(20, 310, 171, 211))
         self.biological_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 30px;")
         self.biological_widget.setObjectName("biological_widget")
@@ -171,34 +171,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_buttonBC.setObjectName("blue_buttonBC")
         self.blue_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image biological contents</span></p></body></html>")
         self.blue_buttonBC.setStatusTip("BLUE image biological contents")
-        self.rgb_buttonBC = QtWidgets.QPushButton(self.biological_widget)
-        self.rgb_buttonBC.setGeometry(QtCore.QRect(10, 220, 41, 41))
-        self.rgb_buttonBC.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.rgb_buttonBC.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(255, 255, 255);\n"
-"    border-style: outset;\n"
-"    border: 2px;\n"
-"    border-width: 1px;\n"
-"    border-radius: 20px;\n"
-"    border-color: beige;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
-"QPushButton:pressed {\n"
-"    background-color: rgb(180, 180, 180);\n"
-"}")
-        self.rgb_buttonBC.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("icon bio 4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.rgb_buttonBC.setIcon(icon3)
-        self.rgb_buttonBC.setIconSize(QtCore.QSize(60, 35))
-        self.rgb_buttonBC.setObjectName("rgb_buttonBC")
-        self.rgb_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RGB image biological contents</span></p></body></html>")
-        self.rgb_buttonBC.setStatusTip("RGB image biological contents")
-        self.rgb_buttonBC.setGraphicsEffect(self.applyShadow())
+
         self.Red_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
         self.Red_PercentBC_edit.setGeometry(QtCore.QRect(70, 50, 71, 31))
         self.Red_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -229,16 +202,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "color: rgb(255, 255, 255);")
         self.Blue_PercentBC_edit.setReadOnly(True)
         self.Blue_PercentBC_edit.setObjectName("Blue_PercentBC_edit")
-        self.RGB_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.RGB_PercentBC_edit.setGeometry(QtCore.QRect(70, 230, 71, 31))
-        self.RGB_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
-"color: rgb(255, 255, 255);")
-        self.RGB_PercentBC_edit.setReadOnly(True)
-        self.RGB_PercentBC_edit.setObjectName("RGB_PercentBC_edit")
+
         self.compensate_edit2 = QtWidgets.QLineEdit(self.biological_widget)
         self.compensate_edit2.setGeometry(QtCore.QRect(0, 20, 171, 16))
         self.compensate_edit2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
@@ -265,13 +229,13 @@ class Ui_Analisys_cellService(QMainWindow):
         
     def set_numberWidget(self):
         self.number_widget = QtWidgets.QWidget(self.principal_widget)
-        self.number_widget.setGeometry(QtCore.QRect(20, 610, 171, 91))
+        self.number_widget.setGeometry(QtCore.QRect(20, 530, 171, 171))
         self.number_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 30px;")
         self.number_widget.setObjectName("number_widget")
         #self.number_widget.setGraphicsEffect(self.applyShadow())
         self.number_cells_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.number_cells_edit.setGeometry(QtCore.QRect(70, 50, 71, 31))
+        self.number_cells_edit.setGeometry(QtCore.QRect(70, 40, 71, 31))
         self.number_cells_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 10px;\n"
 "    font: bold 14px;\n"
@@ -299,21 +263,19 @@ class Ui_Analisys_cellService(QMainWindow):
 "    padding: 6px;\n"
 "font: 14pt \"Varela\" bold;\n"
 "color: rgb(255, 255, 255);")
-
         self.numbers_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.numbers_edit.setReadOnly(True)
         self.numbers_edit.setObjectName("numbers_edit")
-        self.numbers_edit.setText("Number of cells")
+        self.numbers_edit.setText('Numbers of cells')
         self.number_button = QtWidgets.QPushButton(self.number_widget)
-        self.number_button.setGeometry(QtCore.QRect(10, 40, 41, 41))
+        self.number_button.setGeometry(QtCore.QRect(20, 40, 31, 31))
         self.number_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.number_button.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(255, 255, 255);\n"
 "    border-style: outset;\n"
 "    border: 2px;\n"
 "    border-width: 1px;\n"
-"    border-radius: 20px;\n"
-"    border-color: beige;\n"
+"    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
@@ -322,16 +284,85 @@ class Ui_Analisys_cellService(QMainWindow):
 "}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
-"}")   
-        self.number_button.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("icon n.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.number_button.setIcon(icon4)
-        self.number_button.setIconSize(QtCore.QSize(60, 35))
+"}")
         self.number_button.setGraphicsEffect(self.applyShadow())
+        self.number_button.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("icon n.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.number_button.setIcon(icon3)
+        self.number_button.setIconSize(QtCore.QSize(40, 30))
         self.number_button.setObjectName("number_button")
-        self.number_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of cells</span></p></body></html>")
-        self.number_button.setStatusTip("Calculate the number of cells")
+        self.number_cells_edit_2 = QtWidgets.QLineEdit(self.number_widget)
+        self.number_cells_edit_2.setGeometry(QtCore.QRect(70, 80, 71, 31))
+        self.number_cells_edit_2.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 10px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.number_cells_edit_2.setReadOnly(True)
+        self.number_cells_edit_2.setObjectName("number_cells_edit_2")
+        self.number_cells_edit_3 = QtWidgets.QLineEdit(self.number_widget)
+        self.number_cells_edit_3.setGeometry(QtCore.QRect(70, 120, 71, 31))
+        self.number_cells_edit_3.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 10px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.number_cells_edit_3.setReadOnly(True)
+        self.number_cells_edit_3.setObjectName("number_cells_edit_3")
+        self.number_button_2 = QtWidgets.QPushButton(self.number_widget)
+        self.number_button_2.setGeometry(QtCore.QRect(20, 80, 31, 31))
+        self.number_button_2.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.number_button_2.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}")
+        self.number_button_2.setGraphicsEffect(self.applyShadow())
+        self.number_button_2.setText("")
+        self.number_button_2.setIcon(icon3)
+        self.number_button_2.setIconSize(QtCore.QSize(40, 30))
+        self.number_button_2.setObjectName("number_button_2")
+        self.number_button_3 = QtWidgets.QPushButton(self.number_widget)
+        self.number_button_3.setGeometry(QtCore.QRect(20, 120, 31, 31))
+        self.number_button_3.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.number_button_3.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}")
+        self.number_button_3.setGraphicsEffect(self.applyShadow())
+        self.number_button_3.setText("")
+        self.number_button_3.setIcon(icon3)
+        self.number_button_3.setIconSize(QtCore.QSize(40, 30))
+        self.number_button_3.setObjectName("number_button_3")
+        self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
+        self.similarity_widget.setGeometry(QtCore.QRect(20, 10, 171, 281))
+        self.similarity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-radius: 30px;")
+        self.similarity_widget.setObjectName("similarity_widget")
     
     def set_similarityWidget(self):
         self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
@@ -642,5 +673,4 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def set_biologicalBLUE(self):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
-
 
