@@ -10,183 +10,287 @@ import skimage.morphology
 import numpy as np
 from skimage import filters,morphology
 
-
 class CellServiceBinaryProcessing(QMainWindow):
-
+    
     def __init__(self, parent):
         super().__init__()
+        
         self.parent = parent
+        self.setWindowTitle("Processing")
+        self.setupUi()
         
-        self.init_ui()
+        self.binary_processing()       
         
-    def init_ui(self):
-        self.setWindowTitle("CellService")
-        self.centralwidget = QWidget()
-        self.setCentralWidget(self.centralwidget)
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
-        self.centralwidget.setLayout(self.gridLayout)
+        self.segmentation_processing()
         
-        init_size = 128
-        
-        self.radioRed = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioRed.setAutoRepeatDelay(100)
-        self.radioRed.setText("Red Image")
-        self.gridLayout.addWidget(self.radioRed, 0, 0)
-        self.radioGreen = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioGreen.setAutoRepeatDelay(100)
-        self.radioGreen.setText("Green image")
-        self.gridLayout.addWidget(self.radioGreen, 0, 1)
-        self.radioBlue = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioBlue.setText("Blue Image")
-        self.gridLayout.addWidget(self.radioBlue, 0, 2)
-        
-        self.Original_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Original_Label.setStyleSheet("border: 3px solid red;")
-        self.Original_Label.resize(init_size, init_size)
-        self.Original_Label.setScaledContents(True)
-        self.gridLayout.addWidget(self.Original_Label, 2, 0)  
-        self.Binary_Label = QtWidgets.QLabel(self.centralwidget)
-        self.Binary_Label.setScaledContents(True)
-        self.Binary_Label.setStyleSheet("border: 3px solid red;")
-        self.Binary_Label.resize(init_size, init_size) 
-        self.gridLayout.addWidget(self.Binary_Label, 3, 0)
-        self.Filtred_Label= QtWidgets.QLabel(self.centralwidget)
+        self.menuBar()
+    
+    def setupUi(self):
+        self.resize(1128, 820)
+        self.principal_widget = QtWidgets.QWidget()
+        self.principal_widget.setStyleSheet("background-color: rgb(244, 244, 244);\n" "")
+        self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(340, 120, 771, 541))
+        self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
+        self.principal_layout.setContentsMargins(0, 0, 0, 0)
+        self.Filtred_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Filtred_Label.setTabletTracking(True)
+        self.Filtred_Label.setStyleSheet("border: 2px solid red")
+        self.Filtred_Label.setFrameShape(QtWidgets.QFrame.Panel)
+        self.Filtred_Label.setLineWidth(2)
         self.Filtred_Label.setScaledContents(True)
-        self.Filtred_Label.setStyleSheet("border: 3px solid red;")
-        self.Filtred_Label.resize(init_size, init_size)      
-        self.gridLayout.addWidget(self.Filtred_Label, 5, 0)
-        
-        self.Original_Label1 = QtWidgets.QLabel(self.centralwidget)
-        self.gridLayout.addWidget(self.Original_Label1, 2, 1)
-        self.Original_Label1.setScaledContents(True)
-        self.Original_Label1.setStyleSheet("border: 3px solid green;")
-        self.Original_Label1.resize(init_size, init_size)
-        self.Binary_Label1 = QtWidgets.QLabel(self.centralwidget)
-        self.Binary_Label1.setScaledContents(True)
-        self.Binary_Label1.setStyleSheet("border: 3px solid green;")
-        self.gridLayout.addWidget(self.Binary_Label1, 3, 1)
-        self.Filtred_Label1 = QtWidgets.QLabel(self.centralwidget)
-        self.Filtred_Label1.setStyleSheet("border: 3px solid green;")
-        self.gridLayout.addWidget(self.Filtred_Label1, 5, 1)
-        self.Filtred_Label1.resize(init_size, init_size)
-        self.Filtred_Label1.setScaledContents(True)
-        
-        self.Original_Label2 = QtWidgets.QLabel(self.centralwidget)
-        self.Original_Label2.setStyleSheet("border: 3px solid blue;")
+        self.principal_layout.addWidget(self.Filtred_Label, 1, 0, 1, 1)
+        self.Original_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Original_Label2.setStyleSheet("border: 2px solid blue")
         self.Original_Label2.setScaledContents(True)
-        self.Original_Label2.setMouseTracking(True)
-        self.Original_Label2.resize(init_size, init_size)
-        self.gridLayout.addWidget(self.Original_Label2, 2, 2)
-        self.Binary_Label2 = QtWidgets.QLabel(self.centralwidget)
-        self.Binary_Label2.setScaledContents(True)
-        self.Binary_Label2.setStyleSheet("border: 3px solid blue;")
-        self.Binary_Label2.resize(init_size, init_size)
-        self.gridLayout.addWidget(self.Binary_Label2, 3, 2)
-        self.Filtred_Label2 = QtWidgets.QLabel(self.centralwidget)        
-        self.Filtred_Label2.setStyleSheet("border: 3px solid blue;")
-        self.Filtred_Label2.resize(init_size, init_size)
-        self.gridLayout.addWidget(self.Filtred_Label2, 5, 2)
+        self.principal_layout.addWidget(self.Original_Label2, 0, 3, 1, 1)
+        self.Original_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Original_Label.setTabletTracking(True)
+        self.Original_Label.setStyleSheet("border: 2px solid red")
+        self.Original_Label.setFrameShape(QtWidgets.QFrame.Panel)
+        self.Original_Label.setLineWidth(2)
+        self.Original_Label.setScaledContents(True)
+        self.principal_layout.addWidget(self.Original_Label, 0, 0, 1, 1)
+        self.Filtred_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Filtred_Label2.setStyleSheet("border: 2px solid blue")
         self.Filtred_Label2.setScaledContents(True)
+        self.principal_layout.addWidget(self.Filtred_Label2, 1, 3, 1, 1)
+        self.Filtred_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Filtred_Label1.setStyleSheet("border: 2px solid green")
+        self.Filtred_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.Filtred_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.Filtred_Label1.setLineWidth(2)
+        self.Filtred_Label1.setScaledContents(True)
+        self.principal_layout.addWidget(self.Filtred_Label1, 1, 1, 1, 1)
+        self.Original_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Original_Label1.setStyleSheet("border: 2px solid green")
+        self.Original_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.Original_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.Original_Label1.setLineWidth(2)
+        self.Original_Label1.setScaledContents(True)
+        self.principal_layout.addWidget(self.Original_Label1, 0, 1, 1, 1)
         
+        self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
+        self.radioRed.setStyleSheet("font: 10pt \"Varela\";\n" "color: red;")
+        self.radioRed.setChecked(True)
+        self.radioRed.setText("Red Image")
+        self.radioRed.setGeometry(QtCore.QRect(400, 60, 121, 31))
+        self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
+        self.radioGreen.setText("Green Image")
+        self.radioGreen.setGeometry(QtCore.QRect(650, 60, 131, 31))
+        self.radioGreen.setStyleSheet("font: 10pt \"Varela\";\n" "color: green;")
+        self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
+        self.radioBlue.setGeometry(QtCore.QRect(930, 60, 121, 31))
+        self.radioBlue.setStyleSheet("font: 10pt \"Varela\";\n" "color: blue;")
+        self.radioBlue.setText("Blue Image")
         
-        self.Selected = QtWidgets.QTabWidget()
-        
-        self.new_btn_ss5 = """QPushButton{background-color: turquoise;
-                                    border-style: outset;
-                                    border-width: 2px;
-                                    border-radius: 15px;
-                                    border-color: turquoise;
-                                    font: bold 14px;
-                                    min-width: 10em;
-                                    padding: 6px;}
-                        QPushButton:pressed {background-color: rgb(255, 255, 255);
-                                             border-style: inset;}
-                     """
-        self.new_btn = """QPushButton{background-color: turquoise;
-                                    border-style: outset;
-                                    border-width: 2px;
-                                    border-radius: 15px;
-                                    border-color: turquoise;
-                                    font: bold 14px;
-                                    min-width: 5em;
-                                    padding: 6px;}
-                        QPushButton:pressed {background-color: rgb(255, 255, 255);
-                                             border-style: inset;}
-                     """
-                     
-        self.Binarize = QtWidgets.QWidget()
-        self.Selected.addTab(self.Binarize, "Binarize")
-        self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.Binarize)
-        self.fontSizeSpinBox.setGeometry(QtCore.QRect(10, 10, 81, 31))
+        self.setCentralWidget(self.principal_widget)
+        self.set_all_images()
+        self.maximize_window()
+    
+    def binary_processing(self):
+        self.binary_widget = QtWidgets.QWidget(self.principal_widget)
+        self.binary_widget.setGeometry(QtCore.QRect(20, 20, 291, 301))
+        self.binary_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 30px;")
+        self.binary_edit = QtWidgets.QLineEdit(self.binary_widget)
+        self.binary_edit.setGeometry(QtCore.QRect(0, 0, 291, 41))
+        self.binary_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
+            "border-radius:15px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 14pt \"Varela\" bold;\n"
+            "color: rgb(255, 255, 255);")
+        self.binary_edit.setAlignment(QtCore.Qt.AlignCenter)
+        self.binary_edit.setReadOnly(True)
+        self.binary_edit.setText("Binarize")
+        self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.binary_widget)
+        self.fontSizeSpinBox.setGeometry(QtCore.QRect(20, 70, 91, 31))
+        self.fontSizeSpinBox.setTabletTracking(True)
+        self.fontSizeSpinBox.setAutoFillBackground(False)
+        self.fontSizeSpinBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
         self.fontSizeSpinBox.setDecimals(3)
         self.fontSizeSpinBox.setMaximum(255.0)
-        self.fontSizeSpinBox2 = QtWidgets.QDoubleSpinBox(self.Binarize)
-        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(10, 50, 81, 31))
+        self.fontSizeSpinBox2 = QtWidgets.QDoubleSpinBox(self.binary_widget)
+        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(20, 130, 91, 31))
+        self.fontSizeSpinBox2.setTabletTracking(True)
+        self.fontSizeSpinBox2.setAutoFillBackground(False)
+        self.fontSizeSpinBox2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
         self.fontSizeSpinBox2.setDecimals(3)
         self.fontSizeSpinBox2.setMaximum(255.0)
-        self.min = QtWidgets.QLabel(self.Binarize)
-        self.min.setGeometry(QtCore.QRect(104, 15, 91, 16))
-        self.min.setText("min Threashold")
-        self.max = QtWidgets.QLabel(self.Binarize)
-        self.max.setText("max Threashold")
-        self.max.setGeometry(QtCore.QRect(100, 60, 91, 16))
-        self.AutomaticButton = QtWidgets.QPushButton(self.Binarize)
-        self.AutomaticButton.setGeometry(QtCore.QRect(80, 90, 141, 41))
-        self.AutomaticButton.setText("Automatic_Threashold")
-        self.AutomaticButton.setStyleSheet(self.new_btn_ss5)
+        self.label = QtWidgets.QLabel(self.binary_widget)
+        self.label.setGeometry(QtCore.QRect(140, 70, 131, 31))
+        self.label.setText("Min Threashold")
+        self.label.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.label_2 = QtWidgets.QLabel(self.binary_widget)
+        self.label_2.setGeometry(QtCore.QRect(140, 130, 131, 31))
+        self.label_2.setText("Max Threashold")
+        self.label_2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.AutomaticButton = QtWidgets.QPushButton(self.binary_widget)
+        self.AutomaticButton.setGeometry(QtCore.QRect(60, 180, 171, 41))
         self.AutomaticButton.clicked.connect(self.Automatic_threshold)
-        self.Apply = QtWidgets.QPushButton(self.Binarize)
-        self.Apply.setGeometry(QtCore.QRect(90, 140, 121, 41))
+        self.AutomaticButton.setText("Automatic Threashold")
+        self.AutomaticButton.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(255, 255, 255);")
+        self.Apply = QtWidgets.QPushButton(self.binary_widget)
+        self.Apply.clicked.connect(self.runIntensityBinarization)
+        self.Apply.setGeometry(QtCore.QRect(90, 230, 101, 41))
+        self.Apply.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(255, 255, 255);")
         self.Apply.setText("Apply")
         
-        self.Apply.setStyleSheet(self.new_btn_ss5)
-        self.Apply.clicked.connect(self.runIntensityBinarization)
-        
-        self.Segmentation = QtWidgets.QWidget()
-        self.Selected.addTab(self.Segmentation, "Segmentation")
-        self.Raggio = QtWidgets.QSpinBox(self.Segmentation)
-        self.Raggio.setGeometry(QtCore.QRect(21, 11, 71, 31))
-        self.RaggioLabel = QtWidgets.QLabel(self.Segmentation)
-        self.RaggioLabel.setText("Raggio")
-        self.RaggioLabel.setGeometry(QtCore.QRect(104, 15, 81, 21))
-        self.removeCheck = QtWidgets.QCheckBox(self.Segmentation)
-        self.removeCheck.setGeometry(QtCore.QRect(20, 60, 151, 21))
-        self.removeCheck.setText("Remove small object")
-        self.erosionCheck = QtWidgets.QCheckBox(self.Segmentation)
-        self.erosionCheck.setGeometry(QtCore.QRect(20, 90, 101, 21))
+    def segmentation_processing(self):
+        self.segmentation_widget_2 = QtWidgets.QWidget(self.principal_widget)
+        self.segmentation_widget_2.setGeometry(QtCore.QRect(20, 350, 291, 341))
+        self.segmentation_widget_2.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 30px;")
+        self.segmentation_edit_2 = QtWidgets.QLineEdit(self.segmentation_widget_2)
+        self.segmentation_edit_2.setText("Segmentation")
+        self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, 291, 41))
+        self.segmentation_edit_2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
+            "border-radius:15px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 14pt \"Varela\" bold;\n"
+            "color: rgb(255, 255, 255);")
+        self.segmentation_edit_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.segmentation_edit_2.setReadOnly(True)
+        self.removeCheck = QtWidgets.QCheckBox(self.segmentation_widget_2)
+        self.removeCheck.setText("Remove Small Object")
+        self.removeCheck.setGeometry(QtCore.QRect(40, 120, 201, 31))
+        self.removeCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.erosionCheck = QtWidgets.QCheckBox(self.segmentation_widget_2)
         self.erosionCheck.setText("Erosion")
-        self.dilationCheck = QtWidgets.QCheckBox(self.Segmentation)
-        self.dilationCheck.setGeometry(QtCore.QRect(140, 90, 81, 20))
+        
+        self.erosionCheck.setGeometry(QtCore.QRect(40, 150, 101, 31))
+        self.erosionCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.dilationCheck = QtWidgets.QCheckBox(self.segmentation_widget_2)
         self.dilationCheck.setText("Dilation")
-        self.openCheck = QtWidgets.QCheckBox(self.Segmentation)
-        self.openCheck.setGeometry(QtCore.QRect(20, 120, 81, 20))
+        self.dilationCheck.setGeometry(QtCore.QRect(150, 150, 101, 31))
+        self.dilationCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.openCheck = QtWidgets.QCheckBox(self.segmentation_widget_2)
         self.openCheck.setText("Opening")
-        self.noiseCheck = QtWidgets.QCheckBox(self.Segmentation)
-        self.noiseCheck.setGeometry(QtCore.QRect(140, 120, 81, 20))
+        self.openCheck.setGeometry(QtCore.QRect(40, 180, 101, 31))
+        self.openCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.noiseCheck = QtWidgets.QCheckBox(self.segmentation_widget_2)
         self.noiseCheck.setText("Closing")
-        
-        self.pushButton = QtWidgets.QPushButton(self.Segmentation)
-        self.pushButton.setGeometry(QtCore.QRect(30, 160, 101, 31))
-        self.pushButton.setText("Apply")
-        self.pushButton.setStyleSheet(self.new_btn)
+        self.noiseCheck.setGeometry(QtCore.QRect(150, 180, 101, 31))
+        self.noiseCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.label_3 = QtWidgets.QLabel(self.segmentation_widget_2)
+        self.label_3.setText("Radius")
+        self.label_3.setGeometry(QtCore.QRect(150, 60, 71, 31))
+        self.label_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.Raggio = QtWidgets.QDoubleSpinBox(self.segmentation_widget_2)
+        self.Raggio.setGeometry(QtCore.QRect(30, 60, 91, 31))
+        self.Raggio.setTabletTracking(True)
+        self.Raggio.setAutoFillBackground(False)
+        self.Raggio.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.Raggio.setDecimals(3)
+        self.Raggio.setMaximum(255.0)
+        self.Label_Save = QtWidgets.QLabel(self.segmentation_widget_2)
+        self.Label_Save.setText("Don't forget to save image!")
+        self.Label_Save.setGeometry(QtCore.QRect(40, 280, 211, 41))
+        self.Label_Save.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(19, 82, 255);")
+        self.pushButton = QtWidgets.QPushButton(self.segmentation_widget_2)
         self.pushButton.clicked.connect(self.apply_segmentation)
-        self.pushButton_2 = QtWidgets.QPushButton(self.Segmentation)
-        self.pushButton_2.setGeometry(QtCore.QRect(160, 160, 101, 31))
+        self.pushButton.setText("Apply")
+        self.pushButton.setGeometry(QtCore.QRect(50, 230, 91, 41))
+        self.pushButton.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(255, 255, 255);")
+        self.pushButton_2 = QtWidgets.QPushButton(self.segmentation_widget_2)
         self.pushButton_2.setText("Save")
-        self.pushButton_2.setStyleSheet(self.new_btn)
         self.pushButton_2.clicked.connect(self.save)
-        self.Label_Save=QLabel(self.Segmentation)
-        self.Label_Save.setText("Don't forget to save")
-        self.Label_Save.setGeometry(QtCore.QRect(90, 180, 200, 70))
+        self.pushButton_2.setGeometry(QtCore.QRect(160, 230, 101, 41))
+        self.pushButton_2.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(255, 255, 255);")
         
-        self.set_all_images()
-        
-        self.gridLayout_2.addLayout(self.gridLayout, 0, 1)
-        self.gridLayout_2.addWidget(self.Selected, 0, 2)
-        self.maximize_window()
-        self.show()
-        
+    def menuBar(self):
+        self.menubar = QtWidgets.QMenuBar()
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1128, 26))
+        self.menubar.setTabletTracking(False)
+        self.menubar.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.menubar.setStyleSheet("background-color: rgb(255, 253, 253);\n"
+            "selection-color: rgb(128, 183, 255);\n"
+            "color: rgb(71, 71, 71);")
+        self.help_menu = QtWidgets.QMenu(self.menubar)
+        self.help_menu.setTitle( "Help")
+        self.setMenuBar(self.menubar)
+        self.menubar.addAction(self.help_menu.menuAction())
+    
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
         self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
@@ -199,13 +303,13 @@ class CellServiceBinaryProcessing(QMainWindow):
     def runIntensityBinarization(self):
         if self.radioRed.isChecked():
             self.parent.red_mask = self.binarizeImage(self.parent.red_image)
-            self.parent.set_image(self.parent.red_mask, self.Binary_Label, "red", mask=True)
+            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
         elif self.radioGreen.isChecked():
             self.parent.green_mask = self.binarizeImage(self.parent.green_image)
-            self.parent.set_image(self.parent.green_mask, self.Binary_Label1, "green", mask=True)
+            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         elif self.radioBlue.isChecked():
             self.parent.blue_mask = self.binarizeImage(self.parent.blue_image)
-            self.parent.set_image(self.parent.blue_mask, self.Binary_Label2, "blue", mask=True)
+            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
         else:
             pass
     
@@ -273,8 +377,9 @@ class CellServiceBinaryProcessing(QMainWindow):
                 notRed=False
             if notRed:
                 self.mask_red=None
+                self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
             self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
-        elif self.radioGreen.isChecked():
+        if self.radioGreen.isChecked():
             if self.erosionCheck.isChecked():
                 self.mask_green=morphology.erosion(self.parent.green_mask)
                 notGreen=False
@@ -305,8 +410,9 @@ class CellServiceBinaryProcessing(QMainWindow):
                 notGreen=False
             if notGreen:
                 self.mask_green=None
+                self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
             self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-        elif self.radioBlue.isChecked():
+        if self.radioBlue.isChecked():
             if self.noiseCheck.isChecked():
                 self.mask_blue=morphology.binary_closing(self.parent.blue_mask)
                 notBlue=False
@@ -337,13 +443,8 @@ class CellServiceBinaryProcessing(QMainWindow):
                 notBlue=False
             if notBlue:
                 self.mask_blue=None
+                self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
             self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
-        if self.mask_red is None:
-            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-        if self.mask_green is None:
-            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-        if self.mask_blue is None:
-            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
     
     def save(self):
         if(self.mask_red is not None):
@@ -353,9 +454,3 @@ class CellServiceBinaryProcessing(QMainWindow):
         if(self.mask_blue is not None):
             self.parent.blue_mask = self.mask_blue
         self.Label_Save.setText("SAVED IMAGES")
-        
-        
-#PER GIUSEPPE: LE MASCHERE SI CHIAMANO self.parent.colore_mask
-#              MENTRE LE IMMAGINI IN FORMATO NP SONO self.parent.colore_image
-
-
