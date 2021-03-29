@@ -3,6 +3,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtGui import QColor
 import numpy as np
+import skimage
+import skimage.io
+from skimage import exposure
+import skimage.morphology
+from skimage import filters
+from scipy import ndimage
 
 class Ui_Analisys_cellService(QMainWindow):
     
@@ -285,6 +291,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.number_button.clicked.connect(self.set_number_RED)
         self.number_button.setGraphicsEffect(self.applyShadow())
         self.number_button.setText("")
         icon3 = QtGui.QIcon()
@@ -330,6 +337,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.number_button_2.clicked.connect(self.set_number_GREEN)
         self.number_button_2.setGraphicsEffect(self.applyShadow())
         self.number_button_2.setText("")
         self.number_button_2.setIcon(icon3)
@@ -353,6 +361,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.number_button_3.clicked.connect(self.set_number_BLUE)
         self.number_button_3.setGraphicsEffect(self.applyShadow())
         self.number_button_3.setText("")
         self.number_button_3.setIcon(icon3)
@@ -673,4 +682,20 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def set_biologicalBLUE(self):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
+    
+    def countCells(self, matrixMask, edit):
+        imageFiltered = ndimage.gaussian_filter(matrixMask, 0.1)
+        cells, number_of_cells = ndimage.label(imageFiltered)
+        edit.setText(str(number_of_cells) + " cells")
+        self.parent.set_image(cells, self.RGB_Label, "red", mask=True)
+    
+    def set_number_RED(self):
+        self.countCells(self.parent.red_mask, self.number_cells_edit)
+    
+    def set_number_GREEN(self):
+        self.countCells(self.parent.green_mask, self.number_cells_edit_2)
+    
+    def set_number_BLUE(self):
+        self.countCells(self.parent.blue_mask, self.number_cells_edit_3)
+
 
