@@ -25,12 +25,13 @@ class CellServiceBinaryProcessing(QMainWindow):
         
         self.menuBar()
     
+    # 771,541
     def setupUi(self):
         self.resize(1128, 820)
         self.principal_widget = QtWidgets.QWidget()
         self.principal_widget.setStyleSheet("background-color: rgb(244, 244, 244);\n" "")
         self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(340, 120, 771, 541))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(340, 120,1000, 700))
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         self.Filtred_Label = QtWidgets.QLabel(self.gridLayoutWidget)
@@ -74,13 +75,13 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.radioRed.setStyleSheet("font: 10pt \"Varela\";\n" "color: red;")
         self.radioRed.setChecked(True)
         self.radioRed.setText("Red Image")
-        self.radioRed.setGeometry(QtCore.QRect(400, 60, 121, 31))
+        self.radioRed.setGeometry(QtCore.QRect(430, 60, 121, 31))
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
         self.radioGreen.setText("Green Image")
-        self.radioGreen.setGeometry(QtCore.QRect(650, 60, 131, 31))
+        self.radioGreen.setGeometry(QtCore.QRect(750, 60, 131, 31))
         self.radioGreen.setStyleSheet("font: 10pt \"Varela\";\n" "color: green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioBlue.setGeometry(QtCore.QRect(930, 60, 121, 31))
+        self.radioBlue.setGeometry(QtCore.QRect(1100, 60, 121, 31))
         self.radioBlue.setStyleSheet("font: 10pt \"Varela\";\n" "color: blue;")
         self.radioBlue.setText("Blue Image")
         
@@ -293,7 +294,7 @@ class CellServiceBinaryProcessing(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
+        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.9))
     
     def set_all_images(self):
         self.parent.set_image(self.parent.red_image, self.Original_Label, "red", mask=False)
