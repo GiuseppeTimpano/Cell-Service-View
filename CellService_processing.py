@@ -169,7 +169,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         
     def segmentation_processing(self):
         self.segmentation_widget_2 = QtWidgets.QWidget(self.principal_widget)
-        self.segmentation_widget_2.setGeometry(QtCore.QRect(20, 350, 291, 341))
+        self.segmentation_widget_2.setGeometry(QtCore.QRect(20, 350, 291, 541))
         self.segmentation_widget_2.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 30px;")
         self.segmentation_edit_2 = QtWidgets.QLineEdit(self.segmentation_widget_2)
         self.segmentation_edit_2.setText("Segmentation")
@@ -251,7 +251,8 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Raggio.setMaximum(255.0)
         self.Label_Save = QtWidgets.QLabel(self.segmentation_widget_2)
         self.Label_Save.setText("Don't forget to save image!")
-        self.Label_Save.setGeometry(QtCore.QRect(40, 280, 211, 41))
+        self.Label_Save.setWordWrap(True)
+        self.Label_Save.setGeometry(QtCore.QRect(40, 280, 211, 151))
         self.Label_Save.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -278,6 +279,9 @@ class CellServiceBinaryProcessing(QMainWindow):
             "    padding: 6px;\n"
             "font: 10pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
+        self.mask_red=None
+        self.mask_green=None
+        self.mask_blue=None
         
     def menuBar(self):
         self.menubar = QtWidgets.QMenuBar()
@@ -341,9 +345,6 @@ class CellServiceBinaryProcessing(QMainWindow):
         return binarymat
     
     def apply_segmentation(self):
-        self.mask_red=None
-        self.mask_green=None
-        self.mask_blue=None
         notRed=True
         notGreen=True
         notBlue=True
@@ -380,6 +381,7 @@ class CellServiceBinaryProcessing(QMainWindow):
                 self.mask_red=None
                 self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
             self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+            self.Label_Save.setText("Don't forget to save image!")
         if self.radioGreen.isChecked():
             if self.erosionCheck.isChecked():
                 self.mask_green=morphology.erosion(self.parent.green_mask)
@@ -413,6 +415,7 @@ class CellServiceBinaryProcessing(QMainWindow):
                 self.mask_green=None
                 self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
             self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+            self.Label_Save.setText("Don't forget to save image!")
         if self.radioBlue.isChecked():
             if self.noiseCheck.isChecked():
                 self.mask_blue=morphology.binary_closing(self.parent.blue_mask)
@@ -446,6 +449,7 @@ class CellServiceBinaryProcessing(QMainWindow):
                 self.mask_blue=None
                 self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
             self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
+            self.Label_Save.setText("Don't forget to save image!")
     
     def save(self):
         if(self.mask_red is not None):
@@ -454,4 +458,4 @@ class CellServiceBinaryProcessing(QMainWindow):
             self.parent.green_mask = self.mask_green
         if(self.mask_blue is not None):
             self.parent.blue_mask = self.mask_blue
-        self.Label_Save.setText("SAVED IMAGES")
+        self.Label_Save.setText("SAVED IMAGES! IF YOU WANT TO CHANGE THE IMAGES, REMEMBER TO REPEAT THE BINARIZATION")
