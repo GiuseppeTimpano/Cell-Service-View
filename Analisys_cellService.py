@@ -27,6 +27,8 @@ class Ui_Analisys_cellService(QMainWindow):
         
         self.set_intensityWidget()
         
+        self.set_menuBar()
+        
     
     def setupUi(self):
         # set the window's style
@@ -107,6 +109,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -132,6 +137,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -157,6 +165,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "    border-style: inset;\n"
@@ -269,6 +280,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    padding: 6px;\n"
 "}\n"
 "\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}\n"
@@ -296,6 +310,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -321,6 +338,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "    border-style: inset;\n"
@@ -346,6 +366,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -470,6 +493,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -495,6 +521,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -520,6 +549,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "    border-style: inset;\n"
@@ -629,6 +661,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -654,6 +689,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
@@ -679,6 +717,9 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "    border-style: inset;\n"
@@ -835,8 +876,8 @@ class Ui_Analisys_cellService(QMainWindow):
     def applyShadow(self):
         shadow = QtWidgets.QGraphicsDropShadowEffect()
         shadow.setBlurRadius(40)
-        shadow.setXOffset(3)
-        shadow.setYOffset(3)
+        shadow.setXOffset(0)
+        shadow.setYOffset(0)
         shadow.setColor(QtGui.QColor(209, 209, 209))
         return shadow
     
