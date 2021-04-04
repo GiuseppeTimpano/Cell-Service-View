@@ -27,13 +27,13 @@ class Ui_Analisys_cellService(QMainWindow):
         
         self.set_intensityWidget()
         
-        self.set_menuBar()
+        self.set_insertWidget()
         
     
     def setupUi(self):
         # set the window's style
         self.setObjectName("Analisys_cellService")
-        self.resize(1150, 738)
+        self.resize(1129, 694)
         self.setWindowTitle("Analisys")
         
         # set principa widget's style
@@ -51,43 +51,138 @@ class Ui_Analisys_cellService(QMainWindow):
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         self.principal_layout.setObjectName("principal_layout")
         
-        # set RED Label and add the label to grid layout
+        # set RGB Label and add the label to grid layout
         self.RGB_Label = QtWidgets.QLabel(self.gridLayoutWidget)
         self.RGB_Label.setTabletTracking(True)
-        self.RGB_Label.setStyleSheet("border: 2px solid red")
+        self.RGB_Label.setStyleSheet("border: 2px solid black")
         self.RGB_Label.setFrameShape(QtWidgets.QFrame.Panel)
         self.RGB_Label.setLineWidth(2)
         self.RGB_Label.setText("")
         self.RGB_Label.setScaledContents(True)
         self.RGB_Label.setObjectName("RGB_Label")
-        self.principal_layout.addWidget(self.RGB_Label, 0, 0, 1, 1)
+        self.principal_layout.addWidget(self.RGB_Label, 1, 1, 1, 1)
         
         # set BLUE Label and add the label to grid layout
         self.BLUE_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.BLUE_Label.setStyleSheet("border: 2px solid black")
+        self.BLUE_Label.setStyleSheet("border: 2px solid blue")
         self.BLUE_Label.setText("")
         self.BLUE_Label.setScaledContents(True)
         self.BLUE_Label.setObjectName("BLUE_Label")
-        self.principal_layout.addWidget(self.BLUE_Label, 1, 1, 1, 1)
+        self.principal_layout.addWidget(self.BLUE_Label, 1, 0, 1, 1)
         
         # set GREEN Label and add the label to grid layout
         self.GREEN_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.GREEN_Label.setStyleSheet("border: 2px solid blue")
+        self.GREEN_Label.setStyleSheet("border: 2px solid green")
         self.GREEN_Label.setText("")
         self.GREEN_Label.setScaledContents(True)
         self.GREEN_Label.setObjectName("GREEN_Label")
-        self.principal_layout.addWidget(self.GREEN_Label, 1, 0, 1, 1)
+        self.principal_layout.addWidget(self.GREEN_Label, 0, 1, 1, 1)
         
         # set RED Label and add the label to grid layout
         self.RED_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.RED_Label.setStyleSheet("border: 2px solid green")
+        self.RED_Label.setStyleSheet("border: 2px solid red")
         self.RED_Label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.RED_Label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.RED_Label.setLineWidth(2)
         self.RED_Label.setText("")
         self.RED_Label.setScaledContents(True)
         self.RED_Label.setObjectName("RED_Label")
-        self.principal_layout.addWidget(self.RED_Label, 0, 1, 1, 1)
+        self.principal_layout.addWidget(self.RED_Label, 0, 0, 1, 1)
+        
+        self.open_image_button = QtWidgets.QPushButton(self.principal_widget)
+        self.open_image_button.setGeometry(QtCore.QRect(20, 10, 31, 31))
+        self.open_image_button.setMouseTracking(True)
+        self.open_image_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.open_image_button.setToolTipDuration(-1)
+        self.open_image_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 10px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}" "\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.open_image_button.setGraphicsEffect(self.applyShadow())
+        self.open_image_button.setText("")
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap("file_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.open_image_button.setIcon(icon13)
+        self.open_image_button.setIconSize(QtCore.QSize(40, 27))
+        self.open_image_button.setObjectName("open_image_button")
+        self.open_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open pre-processed images</span></p></body></html>")
+        self.open_image_button.setStatusTip("Open pre-processed images")
+        self.open_image_button.clicked.connect(self.set_all_images)
+        
+        self.canc_image_button = QtWidgets.QPushButton(self.principal_widget)
+        self.canc_image_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
+        self.canc_image_button.setMouseTracking(True)
+        self.canc_image_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.canc_image_button.setToolTipDuration(-1)
+        self.canc_image_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 10px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}" "\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.canc_image_button.setText("")
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap("canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.canc_image_button.setIcon(icon14)
+        self.canc_image_button.setIconSize(QtCore.QSize(35, 23))
+        self.canc_image_button.setObjectName("canc_image_button")
+        self.canc_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Clear all </span></p></body></html>")
+        self.canc_image_button.setStatusTip("Clear all ")
+        
+        self.help_button = QtWidgets.QPushButton(self.principal_widget)
+        self.help_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
+        self.help_button.setMouseTracking(True)
+        self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.help_button.setToolTipDuration(-1)
+        self.help_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 10px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}" "\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help </span></p></body></html>")
+        self.help_button.setStatusTip("Help")
+        self.help_button.setText("")
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap("help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.help_button.setIcon(icon15)
+        self.help_button.setIconSize(QtCore.QSize(35, 30))
+        self.help_button.setObjectName("help_button")
         
     def set_biologicalWidget(self):
         self.biological_widget = QtWidgets.QWidget(self.principal_widget)
@@ -259,7 +354,7 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def set_overlapWidget(self):
         self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
-        self.similarity_widget.setGeometry(QtCore.QRect(20, 40, 191, 331))
+        self.similarity_widget.setGeometry(QtCore.QRect(20, 50, 191, 331))
         self.similarity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.similarity_widget.setGraphicsEffect(self.applyShadow())
@@ -287,6 +382,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    background-color: rgb(180, 180, 180);\n"
 "}\n"
 "")
+        self.red_blue_buttonS.clicked.connect(self.similarity_buttonRB)
         self.red_blue_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_blue_buttonS.setText("")
         icon3 = QtGui.QIcon()
@@ -316,6 +412,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.red_green_buttonS.clicked.connect(self.similarity_buttonRG)
         self.red_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and GREEN overlap</span></p></body></html>")
         self.red_green_buttonS.setStatusTip("RED and GREEN overlap")
@@ -345,6 +442,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    background-color: rgb(180, 180, 180);\n"
 "    border-style: inset;\n"
 "}")
+        self.blue_green_buttonS.clicked.connect(self.similarity_buttonGB)
         self.blue_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.blue_green_buttonS.setText("")
         icon5 = QtGui.QIcon()
@@ -372,6 +470,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.total_buttonS.clicked.connect(self.similarity_buttonRGB)
         self.total_buttonS.setGraphicsEffect(self.applyShadow())
         self.total_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED, GREEN and BLUE overlap</span></p></body></html>")
         self.total_buttonS.setStatusTip("RED, GREEN and BLUE overlap")
@@ -475,7 +574,7 @@ class Ui_Analisys_cellService(QMainWindow):
         
     def set_numberIslands(self):
         self.number_widget = QtWidgets.QWidget(self.principal_widget)
-        self.number_widget.setGeometry(QtCore.QRect(920, 40, 191, 261))
+        self.number_widget.setGeometry(QtCore.QRect(920, 120, 191, 261))
         self.number_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.number_widget.setGraphicsEffect(self.applyShadow())
@@ -643,7 +742,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_widget = QtWidgets.QWidget(self.principal_widget)
     
     def set_intensityWidget(self):
-        self.intensity_widget.setGeometry(QtCore.QRect(920, 380, 191, 261))
+        self.intensity_widget.setGeometry(QtCore.QRect(920, 400, 191, 261))
         self.intensity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.intensity_widget.setGraphicsEffect(self.applyShadow())
@@ -839,39 +938,64 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_intensity_edit_max.setObjectName("Blue_intensity_edit_max")
         self.setCentralWidget(self.principal_widget)
         
-    def set_menuBar(self):
-        self.menubar = QtWidgets.QMenuBar(self)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1150, 21))
-        self.menubar.setTabletTracking(False)
-        self.menubar.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.menubar.setStyleSheet("background-color: rgb(255, 253, 253);\n"
-"selection-color: rgb(128, 183, 255);\n"
-"color: rgb(71, 71, 71);")
-        self.menubar.setObjectName("menubar")
-        self.file_menu = QtWidgets.QMenu(self.menubar)
-        self.file_menu.setObjectName("file_menu")
-        self.file_menu.setTitle("File")
-        self.help_menu = QtWidgets.QMenu(self.menubar)
-        self.help_menu.setObjectName("help_menu")
-        self.help_menu.setTitle("Help")
-        self.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(self)
-        self.statusbar.setObjectName("statusbar")
-        self.setStatusBar(self.statusbar)
-        self.actionPre_processed_image_analisys = QtWidgets.QAction(self)
-        self.actionPre_processed_image_analisys.setObjectName("actionPre_processed_image_analisys")
-        self.actionPre_processed_image_analisys.setText("Analysis of pre-processed images")
-        self.actionNew_images_analisys = QtWidgets.QAction(self)
-        self.actionNew_images_analisys.setObjectName("actionNew_images_analisys")
-        self.actionNew_images_analysis = QtWidgets.QAction(self)
-        self.actionNew_images_analysis.setObjectName("actionNew_images_analysis")
-        self.actionNew_images_analisys.setText("New images analisys")
-        self.actionNew_images_analysis.setText("New images to analyze")
-        self.file_menu.addAction(self.actionPre_processed_image_analisys)
-        self.file_menu.addSeparator()
-        self.file_menu.addAction(self.actionNew_images_analysis)
-        self.menubar.addAction(self.file_menu.menuAction())
-        self.menubar.addAction(self.help_menu.menuAction())
+    def set_insertWidget(self):
+        self.parameter_widget = QtWidgets.QWidget(self.principal_widget)
+        self.parameter_widget.setGeometry(QtCore.QRect(920, 30, 191, 71))
+        self.parameter_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-radius: 35px;")
+        self.parameter_widget.setObjectName("parameter_widget")
+        #self.parameter_widget.setGraphicsEffect(self.applyShadow())
+        self.RGB_PercentS_edit_2 = QtWidgets.QLineEdit(self.parameter_widget)
+        self.RGB_PercentS_edit_2.setGeometry(QtCore.QRect(40, 30, 91, 31))
+        self.RGB_PercentS_edit_2.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.RGB_PercentS_edit_2.setReadOnly(False)
+        self.RGB_PercentS_edit_2.setObjectName("RGB_PercentS_edit_2")
+        self.parameter_title = QtWidgets.QLineEdit(self.parameter_widget)
+        self.parameter_title.setGeometry(QtCore.QRect(20, 10, 161, 16))
+        self.parameter_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.parameter_title.setReadOnly(True)
+        self.parameter_title.setObjectName("parameter_title")
+        self.confirm_button = QtWidgets.QPushButton(self.parameter_widget)
+        self.confirm_button.setGeometry(QtCore.QRect(140, 30, 31, 31))
+        self.confirm_button.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.confirm_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}")
+        self.confirm_button.setGraphicsEffect(self.applyShadow())
+        self.confirm_button.setText("")
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap("confirm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.confirm_button.setIcon(icon16)
+        self.confirm_button.setIconSize(QtCore.QSize(60, 30))
+        self.confirm_button.setObjectName("confirm_button")
+        self.confirm_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Confirm parameter</span></p></body></html>")
+        self.confirm_button.setStatusTip("Confirm parameter")
+        self.parameter_title = QtWidgets.QLineEdit(self.parameter_widget)
+        self.parameter_title.setGeometry(QtCore.QRect(20, 10, 161, 16))
+        self.parameter_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.parameter_title.setReadOnly(True)
+        self.parameter_title.setObjectName("parameter_title")
+        self.parameter_title.setText("Parameter for number of islands")
         
     def applyShadow(self):
         shadow = QtWidgets.QGraphicsDropShadowEffect()
