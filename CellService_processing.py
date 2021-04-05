@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import (QSlider, QDockWidget, QApplication, QWidget, QRadioButton, QPushButton, QToolTip, QLabel, QVBoxLayout, QDesktopWidget, QStyleFactory)
-from PyQt5.QtWidgets import (QCheckBox, QBoxLayout,QFileDialog, QWidget, QMainWindow, QGroupBox, QAction, QMenu, QSystemTrayIcon, QLineEdit, QTextEdit, QSpinBox, QDoubleSpinBox)
+from PyQt5.QtWidgets import (QMessageBox, QCheckBox, QBoxLayout,QFileDialog, QWidget, QMainWindow, QGroupBox, QAction, QMenu, QSystemTrayIcon, QLineEdit, QTextEdit, QSpinBox, QDoubleSpinBox)
 from PyQt5.QtGui import QPixmap, QIcon, QFont, QImage
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
@@ -299,13 +299,13 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.fontSizeSpinBox2.setGeometry(QtCore.QRect(p_ini, 130, 95, 31))
         self.label.setGeometry(QtCore.QRect((p_ini+105), 70, 133, 31))
         self.label_2.setGeometry(QtCore.QRect((p_ini+105), 130, 133, 31))
-        self.AutomaticButton.setGeometry(QtCore.QRect((lunghezza*0.24)/4, 180, 173, 41))
-        self.Apply.setGeometry(QtCore.QRect((lunghezza*0.24)/3, 230, 101, 41))
+        self.AutomaticButton.setGeometry(QtCore.QRect((lunghezza*0.24)/6, 180, 173, 41))
+        self.Apply.setGeometry(QtCore.QRect((lunghezza*0.24)/4, 230, 101, 41))
         
         self.segmentation_widget_2.setGeometry(QtCore.QRect(10, 350, (lunghezza*0.24), 541))
         self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, (lunghezza*0.24), 41))
-        self.pushButton.setGeometry(QtCore.QRect((lunghezza*0.24)/5, 230, 91, 41))
-        self.pushButton_2.setGeometry(QtCore.QRect((lunghezza*0.24)/5 + 121, 230, 101, 41))
+        self.pushButton.setGeometry(QtCore.QRect((lunghezza*0.24)/7, 230, 91, 41))
+        self.pushButton_2.setGeometry(QtCore.QRect((lunghezza*0.24)/7 + 121, 230, 101, 41))
     
     def set_all_images(self):
         self.parent.set_image(self.parent.red_image, self.Original_Label, "red", mask=False)
@@ -379,6 +379,8 @@ class CellServiceBinaryProcessing(QMainWindow):
                 notRed=False
             if self.removeCheck.isChecked():
                 raggio=self.Raggio.value()
+                if raggio==0:
+                    self.error_message("Insert a radius!")
                 if(self.mask_red is not None):
                     self.mask_red= morphology.remove_small_objects(self.mask_red.astype(np.bool), raggio)
                 else:
@@ -413,6 +415,8 @@ class CellServiceBinaryProcessing(QMainWindow):
                 notGreen=False
             if self.removeCheck.isChecked():
                 raggio=self.Raggio.value()
+                if raggio==0:
+                    self.error_message("Insert a radius!")
                 if(self.mask_green is not None):
                     self.mask_green= morphology.remove_small_objects(self.mask_green.astype(np.bool), raggio)
                 else:
@@ -447,6 +451,8 @@ class CellServiceBinaryProcessing(QMainWindow):
                 notBlue=False
             if self.removeCheck.isChecked():
                 raggio=self.Raggio.value()
+                if raggio==0:
+                    self.error_message("Insert a radius!")
                 if(self.mask_blue is not None):
                     self.mask_blue= morphology.remove_small_objects(self.mask_blue.astype(np.bool), raggio)
                 else:
@@ -472,3 +478,11 @@ class CellServiceBinaryProcessing(QMainWindow):
             self.parent.blue_mask = self.mask_blue
         self.set_all_mask()
         self.Label_Save.setText("SAVED IMAGES! IF YOU WANT TO CHANGE THE IMAGES, REMEMBER TO REPEAT THE BINARIZATION")
+    
+    def error_message(self, text_error):
+        msg = QMessageBox(self)
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText("Error")
+        msg.setInformativeText(text_error)
+        msg.setWindowTitle("Error")
+        msg.exec_()
