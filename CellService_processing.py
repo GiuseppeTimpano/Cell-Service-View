@@ -93,7 +93,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.binary_edit.setReadOnly(True)
         self.binary_edit.setText("Binarize")
         self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.binary_widget)
-        self.fontSizeSpinBox.setGeometry(QtCore.QRect(20, 70, 95, 31))
+        #self.fontSizeSpinBox.setGeometry(QtCore.QRect(10, 70, 95, 31))
         self.fontSizeSpinBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -103,7 +103,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.fontSizeSpinBox.setDecimals(3)
         self.fontSizeSpinBox.setMaximum(255.0)
         self.fontSizeSpinBox2 = QtWidgets.QDoubleSpinBox(self.binary_widget)
-        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(20, 130, 95, 31))
+        #self.fontSizeSpinBox2.setGeometry(QtCore.QRect(10, 130, 95, 31))
         self.fontSizeSpinBox2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -113,7 +113,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.fontSizeSpinBox2.setDecimals(3)
         self.fontSizeSpinBox2.setMaximum(255.0)
         self.label = QtWidgets.QLabel(self.binary_widget)
-        self.label.setGeometry(QtCore.QRect(140, 70, 131, 31))
+        #self.label.setGeometry(QtCore.QRect(110, 70, 131, 31))
         self.label.setText("Min Threashold")
         self.label.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
@@ -122,7 +122,7 @@ class CellServiceBinaryProcessing(QMainWindow):
             "font: 10pt \"Varela\";\n"
             "color: rgb(19, 82, 255);")
         self.label_2 = QtWidgets.QLabel(self.binary_widget)
-        self.label_2.setGeometry(QtCore.QRect(140, 130, 131, 31))
+        #self.label_2.setGeometry(QtCore.QRect(110, 130, 131, 31))
         self.label_2.setText("Max Threashold")
         self.label_2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
@@ -131,7 +131,7 @@ class CellServiceBinaryProcessing(QMainWindow):
             "font: 10pt \"Varela\";\n"
             "color: rgb(19, 82, 255);")
         self.AutomaticButton = QtWidgets.QPushButton(self.binary_widget)
-        self.AutomaticButton.setGeometry(QtCore.QRect(60, 180, 171, 41))
+        #self.AutomaticButton.setGeometry(QtCore.QRect(60, 180, 171, 41))
         self.AutomaticButton.clicked.connect(self.Automatic_threshold)
         self.AutomaticButton.setText("Automatic Threashold")
         self.AutomaticButton.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -142,7 +142,7 @@ class CellServiceBinaryProcessing(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Apply = QtWidgets.QPushButton(self.binary_widget)
         self.Apply.clicked.connect(self.runIntensityBinarization)
-        self.Apply.setGeometry(QtCore.QRect(90, 230, 101, 41))
+        #self.Apply.setGeometry(QtCore.QRect(90, 230, 101, 41))
         self.Apply.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -244,7 +244,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.pushButton = QtWidgets.QPushButton(self.segmentation_widget_2)
         self.pushButton.clicked.connect(self.apply_segmentation)
         self.pushButton.setText("Apply")
-        self.pushButton.setGeometry(QtCore.QRect(50, 230, 91, 41))
+        #self.pushButton.setGeometry(QtCore.QRect(50, 230, 91, 41))
         self.pushButton.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -254,7 +254,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.pushButton_2 = QtWidgets.QPushButton(self.segmentation_widget_2)
         self.pushButton_2.setText("Save")
         self.pushButton_2.clicked.connect(self.save)
-        self.pushButton_2.setGeometry(QtCore.QRect(160, 230, 101, 41))
+        #self.pushButton_2.setGeometry(QtCore.QRect(160, 230, 101, 41))
         self.pushButton_2.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -291,10 +291,20 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.radioRed.setGeometry(QtCore.QRect(position1, position2-40, 121, 31))
         self.radioGreen.setGeometry(QtCore.QRect((x/3)+position1, position2-40, 121, 31))
         self.radioBlue.setGeometry(QtCore.QRect(((x/3)*2)+position1, position2-40, 121, 31))
-        self.binary_widget.setGeometry(QtCore.QRect(10, 20, (lunghezza*0.23), 301))
-        self.binary_edit.setGeometry(QtCore.QRect(0, 0, (lunghezza*0.23), 41))
-        self.segmentation_widget_2.setGeometry(QtCore.QRect(10, 350, (lunghezza*0.23), 541))
-        self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, (lunghezza*0.23), 41))
+        self.binary_widget.setGeometry(QtCore.QRect(10, 20, (lunghezza*0.24), 301))
+        self.binary_edit.setGeometry(QtCore.QRect(0, 0, (lunghezza*0.24), 41))
+        p_ini=int(screen.height()*0.025)
+        self.fontSizeSpinBox.setGeometry(QtCore.QRect(p_ini, 70, 95, 31))
+        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(p_ini, 130, 95, 31))
+        self.label.setGeometry(QtCore.QRect((p_ini+105), 70, 133, 31))
+        self.label_2.setGeometry(QtCore.QRect((p_ini+105), 130, 133, 31))
+        self.AutomaticButton.setGeometry(QtCore.QRect((lunghezza*0.24)/4, 180, 173, 41))
+        self.Apply.setGeometry(QtCore.QRect((lunghezza*0.24)/3, 230, 101, 41))
+        
+        self.segmentation_widget_2.setGeometry(QtCore.QRect(10, 350, (lunghezza*0.24), 541))
+        self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, (lunghezza*0.24), 41))
+        self.pushButton.setGeometry(QtCore.QRect((lunghezza*0.24)/5, 230, 91, 41))
+        self.pushButton_2.setGeometry(QtCore.QRect((lunghezza*0.24)/5 + 121, 230, 101, 41))
     
     def set_all_images(self):
         self.parent.set_image(self.parent.red_image, self.Original_Label, "red", mask=False)
