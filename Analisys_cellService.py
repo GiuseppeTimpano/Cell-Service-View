@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5.QtGui import QColor
 import numpy as np
 import skimage
@@ -210,6 +210,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.red_buttonBC.clicked.connect(self.set_biologicalRED)
         self.red_buttonBC.setGraphicsEffect(self.applyShadow())
         self.red_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image biological contents</span></p></body></html>")
         self.red_buttonBC.setStatusTip("RED image biological contents")
@@ -238,6 +239,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.green_buttonBC.clicked.connect(self.set_biologicalGREEN)
         self.green_buttonBC.setGraphicsEffect(self.applyShadow())
         self.green_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image biological contents</span></p></body></html>")
         self.green_buttonBC.setStatusTip("GREEN image biological contents")
@@ -267,6 +269,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    background-color: rgb(180, 180, 180);\n"
 "    border-style: inset;\n"
 "}")
+        self.blue_buttonBC.clicked.connect(self.set_biologicalBLUE)
         self.blue_buttonBC.setGraphicsEffect(self.applyShadow())
         self.blue_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image biological contents</span></p></body></html>")
         self.blue_buttonBC.setStatusTip("BLUE image biological contents")
@@ -598,6 +601,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.number_button_red.clicked.connect(self.set_number_RED)
         self.number_button_red.setGraphicsEffect(self.applyShadow())
         self.number_button_red.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the red image</span></p></body></html>")
         self.number_button_red.setStatusTip("Calculate the number of islands in the red image")
@@ -626,6 +630,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.number_button_green.clicked.connect(self.set_number_GREEN)
         self.number_button_green.setGraphicsEffect(self.applyShadow())
         self.number_button_green.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the green image</span></p></body></html>")
         self.number_button_green.setStatusTip("Calculate the number of islands in the green image")
@@ -655,6 +660,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    background-color: rgb(180, 180, 180);\n"
 "    border-style: inset;\n"
 "}")
+        self.number_button_blue.clicked.connect(self.set_number_BLUE)
         self.number_button_blue.setGraphicsEffect(self.applyShadow())
         self.number_button_blue.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the blue image</span></p></body></html>")
         self.number_button_blue.setStatusTip("Calculate the number of islands in the blue image")
@@ -945,16 +951,16 @@ class Ui_Analisys_cellService(QMainWindow):
 "border-radius: 35px;")
         self.parameter_widget.setObjectName("parameter_widget")
         #self.parameter_widget.setGraphicsEffect(self.applyShadow())
-        self.RGB_PercentS_edit_2 = QtWidgets.QLineEdit(self.parameter_widget)
-        self.RGB_PercentS_edit_2.setGeometry(QtCore.QRect(40, 30, 91, 31))
-        self.RGB_PercentS_edit_2.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+        self.parameter_edit = QtWidgets.QLineEdit(self.parameter_widget)
+        self.parameter_edit.setGeometry(QtCore.QRect(40, 30, 91, 31))
+        self.parameter_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "font: 10pt \"Varela\";\n"
 "color: rgb(255, 255, 255);")
-        self.RGB_PercentS_edit_2.setReadOnly(False)
-        self.RGB_PercentS_edit_2.setObjectName("RGB_PercentS_edit_2")
+        self.parameter_edit.setReadOnly(False)
+        self.parameter_edit.setObjectName("RGB_PercentS_edit_2")
         self.parameter_title = QtWidgets.QLineEdit(self.parameter_widget)
         self.parameter_title.setGeometry(QtCore.QRect(20, 10, 161, 16))
         self.parameter_title.setStyleSheet("font: 8pt \"Arial\";\n"
@@ -980,6 +986,8 @@ class Ui_Analisys_cellService(QMainWindow):
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
+        self.buttonPressed = False
+        self.confirm_button.clicked.connect(self.confirm_parameter)
         self.confirm_button.setGraphicsEffect(self.applyShadow())
         self.confirm_button.setText("")
         icon16 = QtGui.QIcon()
@@ -1079,16 +1087,30 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
     
     def countCells(self, matrixMask, edit):
-        imageFiltered = ndimage.gaussian_filter(matrixMask, 0.1)
-        cells, number_of_cells = ndimage.label(imageFiltered)
-        edit.setText(str(number_of_cells) + " cells")
-        self.parent.set_image(cells, self.RGB_Label, "red", mask=True)
+        if self.buttonPressed==True:
+            imageFiltered = ndimage.gaussian_filter(matrixMask, self.parameter)
+            cells, number_of_cells = ndimage.label(imageFiltered)
+            edit.setText(str(number_of_cells) + " islands")
+            self.parent.set_image(cells, self.RGB_Label, "red", mask=True)
+        else:
+            self.parent.error_message("Please, click confirm button!")
+        
+    def confirm_parameter(self):
+        self.buttonPressed=True
+        try:
+            self.parameter = float(self.parameter_edit.text())
+            float(self.parameter)
+            return
+        except ValueError:
+            self.parent.error_message("Insert a number!")
     
     def set_number_RED(self):
-        self.countCells(self.parent.red_mask, self.number_cells_edit)
+        self.countCells(self.parent.red_mask, self.Red_number_edit)
     
     def set_number_GREEN(self):
-        self.countCells(self.parent.green_mask, self.number_cells_edit_2)
+        self.countCells(self.parent.green_mask, self.Green_number_edit)
     
     def set_number_BLUE(self):
-        self.countCells(self.parent.blue_mask, self.number_cells_edit_3)
+        self.countCells(self.parent.blue_mask, self.Blue_number_edit)
+        
+    
