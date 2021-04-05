@@ -312,14 +312,14 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit2.setObjectName("compensate_edit2")
         self.red_biological_title = QtWidgets.QLineEdit(self.biological_widget)
         self.red_biological_title.setGeometry(QtCore.QRect(60, 50, 121, 20))
-        self.red_biological_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
+        self.red_biological_title.setStyleSheet("font: 8pt \"Calibri\";\n"
 "color: rgb(19, 82, 255);")
         self.red_biological_title.setReadOnly(True)
         self.red_biological_title.setObjectName("red_biological_title")
         self.red_biological_title.setText("Red biological contents")
         self.blue_biological_title = QtWidgets.QLineEdit(self.biological_widget)
         self.blue_biological_title.setGeometry(QtCore.QRect(60, 190, 121, 20))
-        self.blue_biological_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
+        self.blue_biological_title.setStyleSheet("font: 8pt \"Calibri\";\n"
 "color: rgb(19, 82, 255);")
         self.blue_biological_title.setReadOnly(True)
         self.blue_biological_title.setObjectName("blue_biological_title")
@@ -337,7 +337,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_PercentBC_edit.setObjectName("Green_PercentBC_edit")
         self.green_biological_title = QtWidgets.QLineEdit(self.biological_widget)
         self.green_biological_title.setGeometry(QtCore.QRect(60, 120, 131, 20))
-        self.green_biological_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
+        self.green_biological_title.setStyleSheet("font: 8pt \"Calibri\";\n"
 "color: rgb(19, 82, 255);")
         self.green_biological_title.setReadOnly(True)
         self.green_biological_title.setObjectName("green_biological_title")
@@ -346,9 +346,9 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biological_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
         self.biological_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
-"    font: bold 14px;\n"
+"    font: bold 10px;\n"
 "    padding: 6px;\n"
-"font: 13pt \"Arial\";\n"
+"font: 14pt \"Calibri\";\n"
 "color: rgb(255, 255, 255);")
         self.biological_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.biological_edit.setReadOnly(True)
@@ -1127,4 +1127,4 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_intensity_edit_min.setText(str(np.min(self.parent.blue_image)))
         self.Blue_intensity_edit_max.setText(str(np.max(self.parent.blue_image)))
         
-        self.redBlue_overlap_title
+        self.biological_edit
