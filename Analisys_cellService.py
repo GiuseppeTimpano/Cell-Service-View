@@ -827,7 +827,6 @@ class Ui_Analisys_cellService(QMainWindow):
 "}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
-"    border-style: inset;\n"
 "}")
         self.intensity_button_blue.setGraphicsEffect(self.applyShadow())
         self.intensity_button_blue.setText("")
