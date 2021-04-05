@@ -93,7 +93,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.binary_edit.setReadOnly(True)
         self.binary_edit.setText("Binarize")
         self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.binary_widget)
-        self.fontSizeSpinBox.setGeometry(QtCore.QRect(20, 70, 91, 31))
+        self.fontSizeSpinBox.setGeometry(QtCore.QRect(20, 70, 95, 31))
         self.fontSizeSpinBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -103,7 +103,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.fontSizeSpinBox.setDecimals(3)
         self.fontSizeSpinBox.setMaximum(255.0)
         self.fontSizeSpinBox2 = QtWidgets.QDoubleSpinBox(self.binary_widget)
-        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(20, 130, 91, 31))
+        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(20, 130, 95, 31))
         self.fontSizeSpinBox2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -279,23 +279,22 @@ class CellServiceBinaryProcessing(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        lunghezza=int(screen.height()*1.3)
+        lunghezza=int(screen.height()*1.4)
         altezza=int(screen.height()*0.9)
         self.setFixedSize(lunghezza,altezza)
         y=int(screen.height()*0.7)
         x=int(screen.height()*0.9)
         position2=int(screen.height()*0.07)
-        position1=int(screen.height()*0.35)
-        print(position2)
+        position1=int(screen.height()*0.45)
         self.gridLayoutWidget.setGeometry(QRect(position1, position2, x, y))
         self.gridLayoutWidget.setFixedSize(x,y)
-        self.radioRed.setGeometry(QtCore.QRect(position1+100, position2-40, 121, 31))
-        self.radioGreen.setGeometry(QtCore.QRect((lunghezza/2)+100, position2-40, 121, 31))
-        self.radioBlue.setGeometry(QtCore.QRect(lunghezza-300, position2-40, 121, 31))
-        self.binary_widget.setGeometry(QtCore.QRect(10, 20, (lunghezza/5), 301))
-        self.binary_edit.setGeometry(QtCore.QRect(0, 0, (lunghezza/5), 41))
-        self.segmentation_widget_2.setGeometry(QtCore.QRect(10, 350, (lunghezza/5), 541))
-        self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, (lunghezza/5), 41))
+        self.radioRed.setGeometry(QtCore.QRect(position1, position2-40, 121, 31))
+        self.radioGreen.setGeometry(QtCore.QRect((x/3)+position1, position2-40, 121, 31))
+        self.radioBlue.setGeometry(QtCore.QRect(((x/3)*2)+position1, position2-40, 121, 31))
+        self.binary_widget.setGeometry(QtCore.QRect(10, 20, (lunghezza*0.23), 301))
+        self.binary_edit.setGeometry(QtCore.QRect(0, 0, (lunghezza*0.23), 41))
+        self.segmentation_widget_2.setGeometry(QtCore.QRect(10, 350, (lunghezza*0.23), 541))
+        self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, (lunghezza*0.23), 41))
     
     def set_all_images(self):
         self.parent.set_image(self.parent.red_image, self.Original_Label, "red", mask=False)
