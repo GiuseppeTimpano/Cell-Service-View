@@ -33,6 +33,7 @@ class CellService(QMainWindow):
         self.centralwidget.setStyleSheet("background-color: qradialgradient(spread:reflect, cx:0.5, cy:0.494318, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(135, 200, 255, 255), stop:1 rgba(255, 255, 255, 255));\n")
         self.gridLayoutWidget = QWidget(self.centralwidget)
         self.principal_layout = QGridLayout(self.gridLayoutWidget)
+        self.principal_layout.setContentsMargins(0, 0, 0, 0)
         self.gridLayoutWidget.setStyleSheet("background-color: white;\n" "border-radius: 10px;\n")
         self.setCentralWidget(self.centralwidget)
         
