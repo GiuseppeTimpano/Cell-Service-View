@@ -28,12 +28,9 @@ class CellServiceBinaryProcessing(QMainWindow):
     
     # 771,541
     def setupUi(self):
-        self.resize(1128, 820)
         self.principal_widget = QtWidgets.QWidget()
         self.principal_widget.setStyleSheet("background-color:qradialgradient(spread:reflect, cx:0.5, cy:0.494318, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(135, 200, 255, 255), stop:1 rgba(255, 255, 255, 255)) ;\n")
-        #self.principal_widget.setStyleSheet("background-color: rgb(244, 244, 244);\n" "")
         self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(340, 120,1000, 700))
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         
@@ -69,26 +66,23 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.radioRed.setStyleSheet("background-color: white;" "border-radius: 10px;\n" "font: 10pt \"Varela\";\n" "color: red;")
         self.radioRed.setChecked(True)
         self.radioRed.setText("Red Image")
-        self.radioRed.setGeometry(QtCore.QRect(430, 60, 121, 31))
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
         self.radioGreen.setText("Green Image")
-        self.radioGreen.setGeometry(QtCore.QRect(750, 60, 131, 31))
         self.radioGreen.setStyleSheet("background-color: white;" "border-radius: 10px;\n" "font: 10pt \"Varela\";\n" "color: green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioBlue.setGeometry(QtCore.QRect(1100, 60, 121, 31))
         self.radioBlue.setStyleSheet("background-color: white;" "border-radius: 10px;\n" "font: 10pt \"Varela\";\n" "color: blue;")
         self.radioBlue.setText("Blue Image")
         
         self.setCentralWidget(self.principal_widget)
         self.set_all_images()
-        self.maximize_window()
+
     
     def binary_processing(self):
         self.binary_widget = QtWidgets.QWidget(self.principal_widget)
-        self.binary_widget.setGeometry(QtCore.QRect(20, 20, 291, 301))
+        #self.binary_widget.setGeometry(QtCore.QRect(20, 20, 291, 301))
         self.binary_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 30px;")
         self.binary_edit = QtWidgets.QLineEdit(self.binary_widget)
-        self.binary_edit.setGeometry(QtCore.QRect(0, 0, 291, 41))
+        #self.binary_edit.setGeometry(QtCore.QRect(0, 0, 291, 41))
         self.binary_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    font: bold 14px;\n"
@@ -159,11 +153,11 @@ class CellServiceBinaryProcessing(QMainWindow):
         
     def segmentation_processing(self):
         self.segmentation_widget_2 = QtWidgets.QWidget(self.principal_widget)
-        self.segmentation_widget_2.setGeometry(QtCore.QRect(20, 350, 291, 541))
+        #self.segmentation_widget_2.setGeometry(QtCore.QRect(20, 350, 291, 541))
         self.segmentation_widget_2.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 30px;")
         self.segmentation_edit_2 = QtWidgets.QLineEdit(self.segmentation_widget_2)
         self.segmentation_edit_2.setText("Segmentation")
-        self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, 291, 41))
+        #self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, 291, 41))
         self.segmentation_edit_2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    font: bold 14px;\n"
@@ -270,6 +264,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.mask_red=None
         self.mask_green=None
         self.mask_blue=None
+        self.maximize_window()
         
     def menuBar(self):
         self.menubar = QtWidgets.QMenuBar()
@@ -284,16 +279,23 @@ class CellServiceBinaryProcessing(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.9))
+        lunghezza=int(screen.height()*1.3)
+        altezza=int(screen.height()*0.9)
+        self.setFixedSize(lunghezza,altezza)
         y=int(screen.height()*0.7)
         x=int(screen.height()*0.9)
         position2=int(screen.height()*0.07)
         position1=int(screen.height()*0.35)
+        print(position2)
         self.gridLayoutWidget.setGeometry(QRect(position1, position2, x, y))
         self.gridLayoutWidget.setFixedSize(x,y)
         self.radioRed.setGeometry(QtCore.QRect(position1+100, position2-40, 121, 31))
-        self.radioGreen.setGeometry(QtCore.QRect((position1*2)+50, position2-40, 121, 31))
-        self.radioBlue.setGeometry(QtCore.QRect((position1*2)+380, position2-40, 121, 31))
+        self.radioGreen.setGeometry(QtCore.QRect((lunghezza/2)+100, position2-40, 121, 31))
+        self.radioBlue.setGeometry(QtCore.QRect(lunghezza-300, position2-40, 121, 31))
+        self.binary_widget.setGeometry(QtCore.QRect(10, 20, (lunghezza/5), 301))
+        self.binary_edit.setGeometry(QtCore.QRect(0, 0, (lunghezza/5), 41))
+        self.segmentation_widget_2.setGeometry(QtCore.QRect(10, 350, (lunghezza/5), 541))
+        self.segmentation_edit_2.setGeometry(QtCore.QRect(0, 0, (lunghezza/5), 41))
     
     def set_all_images(self):
         self.parent.set_image(self.parent.red_image, self.Original_Label, "red", mask=False)
