@@ -29,6 +29,7 @@ class Ui_Analisys_cellService(QMainWindow):
         
         self.set_insertWidget()
         
+        self.statusBar()
     
     def setupUi(self):
         # set the window's style
@@ -258,7 +259,6 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border: 2px;\n"
 "    border-width: 1px;\n"
 "    border-radius: 20px;\n"
-"    border-color: beige;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
@@ -305,21 +305,21 @@ class Ui_Analisys_cellService(QMainWindow):
 "\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 14pt \"Varela\" bold;\n"
+"font: 14pt \"Arial\" bold;\n"
 "color: rgb(255, 255, 255);")
         self.compensate_edit2.setText("")
         self.compensate_edit2.setReadOnly(True)
         self.compensate_edit2.setObjectName("compensate_edit2")
         self.red_biological_title = QtWidgets.QLineEdit(self.biological_widget)
-        self.red_biological_title.setGeometry(QtCore.QRect(60, 50, 121, 20))
-        self.red_biological_title.setStyleSheet("font: 8pt \"Calibri\";\n"
+        self.red_biological_title.setGeometry(QtCore.QRect(50, 50, 135, 20))
+        self.red_biological_title.setStyleSheet("font: 7.4pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.red_biological_title.setReadOnly(True)
         self.red_biological_title.setObjectName("red_biological_title")
         self.red_biological_title.setText("Red biological contents")
         self.blue_biological_title = QtWidgets.QLineEdit(self.biological_widget)
-        self.blue_biological_title.setGeometry(QtCore.QRect(60, 190, 121, 20))
-        self.blue_biological_title.setStyleSheet("font: 8pt \"Calibri\";\n"
+        self.blue_biological_title.setGeometry(QtCore.QRect(50, 190, 135, 20))
+        self.blue_biological_title.setStyleSheet("font: 7.4pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blue_biological_title.setReadOnly(True)
         self.blue_biological_title.setObjectName("blue_biological_title")
@@ -336,8 +336,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_PercentBC_edit.setReadOnly(True)
         self.Green_PercentBC_edit.setObjectName("Green_PercentBC_edit")
         self.green_biological_title = QtWidgets.QLineEdit(self.biological_widget)
-        self.green_biological_title.setGeometry(QtCore.QRect(60, 120, 131, 20))
-        self.green_biological_title.setStyleSheet("font: 8pt \"Calibri\";\n"
+        self.green_biological_title.setGeometry(QtCore.QRect(50, 120, 142, 20))
+        self.green_biological_title.setStyleSheet("font: 7.1pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.green_biological_title.setReadOnly(True)
         self.green_biological_title.setObjectName("green_biological_title")
@@ -348,7 +348,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "border-radius:15px;\n"
 "    font: bold 10px;\n"
 "    padding: 6px;\n"
-"font: 14pt \"Calibri\";\n"
+"font: 12.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.biological_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.biological_edit.setReadOnly(True)
@@ -547,28 +547,28 @@ class Ui_Analisys_cellService(QMainWindow):
         self.similarity_edit.setObjectName("similarity_edit")
         self.similarity_edit.setText("Overlap")
         self.redBlue_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.redBlue_overlap_title.setGeometry(QtCore.QRect(60, 50, 91, 20))
+        self.redBlue_overlap_title.setGeometry(QtCore.QRect(50, 50, 100, 20))
         self.redBlue_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redBlue_overlap_title.setReadOnly(True)
         self.redBlue_overlap_title.setObjectName("redBlue_overlap_title")
         self.redBlue_overlap_title.setText("Blue-red overlap")
         self.redGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.redGreen_overlap_title.setGeometry(QtCore.QRect(60, 120, 101, 20))
+        self.redGreen_overlap_title.setGeometry(QtCore.QRect(50, 120, 120, 20))
         self.redGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redGreen_overlap_title.setReadOnly(True)
         self.redGreen_overlap_title.setObjectName("redGreen_overlap_title")
         self.redGreen_overlap_title.setText("Red-green overlap")
         self.blueGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(60, 190, 101, 20))
+        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(50, 190, 120, 20))
         self.blueGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blueGreen_overlap_title.setReadOnly(True)
         self.blueGreen_overlap_title.setObjectName("blueGreen_overlap_title")
         self.blueGreen_overlap_title.setText("Green-blue overlap")
         self.all_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.all_overlap_title.setGeometry(QtCore.QRect(60, 260, 101, 20))
+        self.all_overlap_title.setGeometry(QtCore.QRect(50, 260, 120, 20))
         self.all_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.all_overlap_title.setReadOnly(True)
@@ -706,27 +706,26 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
 "    padding: 6px;\n"
-"font: 14pt \"Arial\";\n"
+"font: 13pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.number_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.number_edit.setReadOnly(True)
         self.number_edit.setObjectName("number_edit")
         self.number_edit.setText("Number of islands")
         self.red_number_title = QtWidgets.QLineEdit(self.number_widget)
-        self.red_number_title.setGeometry(QtCore.QRect(60, 50, 121, 20))
+        self.red_number_title.setGeometry(QtCore.QRect(50, 50, 140, 20))
         self.red_number_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.red_number_title.setReadOnly(True)
         self.red_number_title.setObjectName("red_number_title")
         self.red_number_title.setText("Red numbers of islands")
-        self.red_number_title.setText("Red numbers of islands")
         self.blue_number_title = QtWidgets.QLineEdit(self.number_widget)
-        self.blue_number_title.setGeometry(QtCore.QRect(60, 190, 121, 20))
+        self.blue_number_title.setGeometry(QtCore.QRect(50, 190, 140, 20))
         self.blue_number_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blue_number_title.setReadOnly(True)
         self.blue_number_title.setObjectName("blue_number_title")
-        self.blue_number_title.setText("Blue biological contents")
+        self.blue_number_title.setText("Blue number of islands")
         self.Green_number_edit = QtWidgets.QLineEdit(self.number_widget)
         self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
         self.Green_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -739,8 +738,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_number_edit.setReadOnly(True)
         self.Green_number_edit.setObjectName("Green_number_edit")
         self.green_number_title = QtWidgets.QLineEdit(self.number_widget)
-        self.green_number_title.setGeometry(QtCore.QRect(60, 120, 131, 20))
-        self.green_number_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
+        self.green_number_title.setGeometry(QtCore.QRect(48, 120, 147, 20))
+        self.green_number_title.setStyleSheet("font: 7pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.green_number_title.setReadOnly(True)
         self.green_number_title.setObjectName("green_number_title")
@@ -883,14 +882,14 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_edit.setObjectName("intensity_edit")
         self.intensity_edit.setText("Intensity")
         self.intensity_red_title = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_red_title.setGeometry(QtCore.QRect(85, 50, 71, 20))
+        self.intensity_red_title.setGeometry(QtCore.QRect(85, 50, 80, 20))
         self.intensity_red_title.setText("Red intensity")
         self.intensity_red_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.intensity_red_title.setReadOnly(True)
         self.intensity_red_title.setObjectName("intensity_red_title")
         self.intensity_blue_title = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_blue_title.setGeometry(QtCore.QRect(85, 190, 71, 20))
+        self.intensity_blue_title.setGeometry(QtCore.QRect(85, 190, 85, 20))
         self.intensity_blue_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.intensity_blue_title.setReadOnly(True)
@@ -908,7 +907,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_intensity_edit_min.setReadOnly(True)
         self.Green_intensity_edit_min.setObjectName("Green_intensity_edit_min")
         self.intensity_green_title = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_green_title.setGeometry(QtCore.QRect(85, 120, 81, 20))
+        self.intensity_green_title.setGeometry(QtCore.QRect(85, 120, 90, 20))
         self.intensity_green_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.intensity_green_title.setReadOnly(True)
@@ -964,8 +963,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.parameter_edit.setReadOnly(False)
         self.parameter_edit.setObjectName("RGB_PercentS_edit_2")
         self.parameter_title = QtWidgets.QLineEdit(self.parameter_widget)
-        self.parameter_title.setGeometry(QtCore.QRect(20, 10, 161, 16))
-        self.parameter_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
+        self.parameter_title.setGeometry(QtCore.QRect(20, 10, 165, 16))
+        self.parameter_title.setStyleSheet("font: 7pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.parameter_title.setReadOnly(True)
         self.parameter_title.setObjectName("parameter_title")
@@ -999,13 +998,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.confirm_button.setObjectName("confirm_button")
         self.confirm_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Confirm parameter</span></p></body></html>")
         self.confirm_button.setStatusTip("Confirm parameter")
-        self.parameter_title = QtWidgets.QLineEdit(self.parameter_widget)
-        self.parameter_title.setGeometry(QtCore.QRect(20, 10, 161, 16))
-        self.parameter_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
-"color: rgb(19, 82, 255);")
-        self.parameter_title.setReadOnly(True)
-        self.parameter_title.setObjectName("parameter_title")
-        self.parameter_title.setText("Parameter for number of islands")
+        self.parameter_title.setText("Parameter number of islands")
         
     def applyShadow(self):
         shadow = QtWidgets.QGraphicsDropShadowEffect()
