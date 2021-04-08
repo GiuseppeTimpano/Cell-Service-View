@@ -242,6 +242,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         icon_help = QtGui.QIcon("Icon/help.png")
         self.Remove_edit_help = QtWidgets.QPushButton(self.intensity_widget)
         self.Remove_edit_help.setIcon(icon_help)
+        self.Remove_edit_help.clicked.connect(self.remove_message)
         self.Remove_edit_help.setGeometry(QtCore.QRect(60, 70, 61, 31))
         self.Remove_edit_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(28, 83, 255);\n"
@@ -285,6 +286,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Erosion_button.setIconSize(QtCore.QSize(60, 35))
         self.Erosion_edit_help = QtWidgets.QPushButton(self.intensity_widget)
         self.Erosion_edit_help.setIcon(icon_help)
+        self.Erosion_edit_help.clicked.connect(self.erosion_message)
         self.Erosion_edit_help.setGeometry(QtCore.QRect(60, 140, 61, 31))
         self.Erosion_edit_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(28, 83, 255);\n"
@@ -328,6 +330,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Dilation_button.setIconSize(QtCore.QSize(60, 35))
         self.Dilation_edit_help = QtWidgets.QPushButton(self.intensity_widget)
         self.Dilation_edit_help.setIcon(icon_help)
+        self.Dilation_edit_help.clicked.connect(self.dilation_message)
         self.Dilation_edit_help.setGeometry(QtCore.QRect(60, 210, 61, 31))
         self.Dilation_edit_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(28, 83, 255);\n"
@@ -371,6 +374,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Open_button.setIconSize(QtCore.QSize(60, 35))
         self.Open_edit_help = QtWidgets.QPushButton(self.intensity_widget)
         self.Open_edit_help.setIcon(icon_help)
+        self.Open_edit_help.clicked.connect(self.open_message)
         self.Open_edit_help.setGeometry(QtCore.QRect(60, 280, 61, 31))
         self.Open_edit_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(28, 83, 255);\n"
@@ -414,6 +418,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Close_button.setIconSize(QtCore.QSize(60, 35))
         self.Close_edit_help = QtWidgets.QPushButton(self.intensity_widget)
         self.Close_edit_help.setIcon(icon_help)
+        self.Close_edit_help.clicked.connect(self.close_message)
         self.Close_edit_help.setGeometry(QtCore.QRect(60, 350, 61, 31))
         self.Close_edit_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(28, 83, 255);\n"
@@ -713,7 +718,7 @@ class CellServiceBinaryProcessing(QMainWindow):
     
     def control(self):
         if (self.valore==0):
-            self.clear_edit_label()
+            self.setEnabled_True_Button()
     
     def set_edit_remove(self):
         self.control()
@@ -741,7 +746,7 @@ class CellServiceBinaryProcessing(QMainWindow):
     
     def set_edit_close(self):
         self.valore=self.valore+1
-        self.selezioni[(self.valore-5)]=5
+        self.selezioni[(self.valore-1)]=5
         self.Close_edit.setText(str(self.valore))
         
     def apply_segmentation(self):
@@ -768,6 +773,7 @@ class CellServiceBinaryProcessing(QMainWindow):
                 raggio=self.Raggio.value()
                 if raggio==0:
                     self.error_message("Insert a radius!")
+                    pass
                 elif self.radioRed.isChecked():
                     if(self.mask_red is not None):
                         self.mask_red= morphology.remove_small_objects(self.mask_red.astype(np.bool), raggio)
@@ -794,47 +800,47 @@ class CellServiceBinaryProcessing(QMainWindow):
             elif (self.selezioni[i]==2):
                 if self.radioRed.isChecked():
                     if(self.mask_blue is not None):
-                        self.mask_red=morphology.erosion(self.mask_red)
+                        self.mask_red=morphology.binary_erosion(self.mask_red)
                     else:
-                        self.mask_red=morphology.erosion(self.parent.red_mask)
+                        self.mask_red=morphology.binary_erosion(self.parent.red_mask)
                     self.notRed=False
                     self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
                     print("arrivato in set red 2")
                 if self.radioGreen.isChecked():
                     if(self.mask_green is not None):
-                        self.mask_green=morphology.erosion(self.mask_green)
+                        self.mask_green=morphology.binary_erosion(self.mask_green)
                     else:
-                        self.mask_green=morphology.erosion(self.parent.green_mask)
+                        self.mask_green=morphology.binary_erosion(self.parent.green_mask)
                     self.notGreen=False
                     self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
                 if self.radioBlue.isChecked():
                     if(self.mask_blue is not None):
-                        self.mask_blue=morphology.erosion(self.mask_blue)
+                        self.mask_blue=morphology.binary_erosion(self.mask_blue)
                     else:
-                        self.mask_blue=morphology.erosion(self.parent.blue_mask)
+                        self.mask_blue=morphology.binary_erosion(self.parent.blue_mask)
                     self.notBlue=False
                     self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
             elif (self.selezioni[i]==3):
                 if self.radioRed.isChecked():
                     if(self.mask_blue is not None):
-                        self.mask_red=morphology.dilation(self.mask_red)
+                        self.mask_red=morphology.binary_dilation(self.mask_red)
                     else:
-                        self.mask_red=morphology.dilation(self.parent.red_mask)
+                        self.mask_red=morphology.binary_dilation(self.parent.red_mask)
                     self.notRed=False
                     self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
                     print("arrivato in set red 3")
                 if self.radioGreen.isChecked():
                     if(self.mask_green is not None):
-                        self.mask_green=morphology.dilation(self.mask_green)
+                        self.mask_green=morphology.binary_dilation(self.mask_green)
                     else:
-                        self.mask_green=morphology.dilation(self.parent.green_mask)
+                        self.mask_green=morphology.binary_dilation(self.parent.green_mask)
                     self.notGreen=False
                     self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
                 if self.radioBlue.isChecked():
                     if(self.mask_blue is not None):
-                        self.mask_blue=morphology.dilation(self.mask_blue)
+                        self.mask_blue=morphology.binary_dilation(self.mask_blue)
                     else:
-                        self.mask_blue=morphology.dilation(self.parent.blue_mask)
+                        self.mask_blue=morphology.binary_dilation(self.parent.blue_mask)
                     self.notBlue=False
                     self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
             elif (self.selezioni[i]==4):
@@ -889,7 +895,6 @@ class CellServiceBinaryProcessing(QMainWindow):
             self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         if self.radioBlue.isChecked() and self.notBlue:
             self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True) 
-        self.clear_edit()
         self.Label_Save.setText("Don't forget to save image!")
         self.Repeat_Red=True
         self.Repeat_Green=True
@@ -897,30 +902,48 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.notRed=True
         self.notGreen=True
         self.notBlue=True
+        self.clear_edit_label()
+        self.setEnabled_False_Button()
+    
+    def setEnabled_False_Button(self):
+        self.Remove_canc.setEnabled(False)
+        self.Dilation_canc.setEnabled(False)
+        self.Erosion_canc.setEnabled(False)
+        self.Open_canc.setEnabled(False)
+        self.Close_canc.setEnabled(False)
+    
+    def setEnabled_True_Button(self):
+        self.Remove_canc.setEnabled(True)
+        self.Dilation_canc.setEnabled(True)
+        self.Erosion_canc.setEnabled(True)
+        self.Open_canc.setEnabled(True)
+        self.Close_canc.setEnabled(True)
     
     def delete(self, label):
-        current_number=int(label.text())
-        for i in range ((current_number), 6):
-            if (i==5):
-                label.clear()
-                self.selezioni[i-1]=0
+        current_number=int(label.text())-1
+        print(current_number)
+        for i in range (current_number, (len(self.selezioni))):
+            if(i==(len(self.selezioni)-1)):
+                self.selezioni[i]=0
             else:
-                self.selezioni[i-1]=self.selezioni[i]
-            if(self.selezioni[i-1]==1):
-                stringa=str(i)
+                self.selezioni[i]=self.selezioni[i+1]
+                print(str(i))
+            if(self.selezioni[i]==1):
+                stringa=str(i+1)
                 self.Remove_edit.setText(stringa)
-            if(self.selezioni[i-1]==2):
-                stringa=str(i)
+            if(self.selezioni[i]==2):
+                stringa=str(i+1)
                 self.Erosion_edit.setText(stringa)
-            if(self.selezioni[i-1]==3):
-                stringa=str(i)
+            if(self.selezioni[i]==3):
+                stringa=str(i+1)
                 self.Dilation_edit.setText(stringa)
-            if(self.selezioni[i-1]==4):
-                stringa=str(i)
+            if(self.selezioni[i]==4):
+                stringa=str(i+1)
                 self.Open_edit.setText(stringa)
-            if(self.selezioni[i-1]==5):
-                stringa=str(i)
+            if(self.selezioni[i]==5):
+                stringa=str(i+1)
                 self.Close_edit.setText(stringa)
+                print(i)
         self.valore=self.valore-1
     
     def delete_edit_remove(self):
@@ -947,13 +970,11 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Repeat_Red=False
         self.Repeat_Green=False
         self.Repeat_Blue=False
-        self.apply_segmentation()
-        
-    def clear_edit(self):
-        self.valore=0
-        self.selezioni=np.array([0,0,0,0,0])
+        self.apply_segmentation()        
     
     def clear_edit_label(self):
+        self.valore=0
+        self.selezioni=np.array([0,0,0,0,0])
         self.Remove_edit.clear()
         self.Erosion_edit.clear()
         self.Dilation_edit.clear()
@@ -966,8 +987,11 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.parent.set_image(self.parent.blue_mask, self.parent.Blue_QLabel, "blue", mask=True)
     
     def save(self):
-        self.Label_Save.setText("SAVED IMAGES! IF YOU WANT TO CHANGE THE IMAGES, REMEMBER TO CLEAR FILTRED LABEL")
-        self.save_message()
+        if((self.parent.red_mask is not None) and (self.parent.green_mask is not None) and (self.parent.blue_mask is not None)):
+            self.Label_Save.setText("SAVED IMAGES! IF YOU WANT TO CHANGE THE IMAGES, REMEMBER TO CLEAR FILTRED LABEL")
+            self.save_message()
+        else:
+            self.error_message("Attention: the images haven't been binarized")
     
     def Clear_filtred_label(self):
         if (self.local_red_mask is not None):
@@ -979,7 +1003,7 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.Filtred_Label.clear()
         self.Filtred_Label1.clear()
         self.Filtred_Label2.clear()
-        self.clear_edit()
+        self.clear_edit_label()
     
     def error_message(self, text_error):
         msg = QMessageBox(self)
@@ -1012,6 +1036,47 @@ class CellServiceBinaryProcessing(QMainWindow):
         else:
             pass
     
+    def remove_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Question)
+        mbox.setWindowTitle("Remove Help")
+        mbox.setText("What does it?")
+        mbox.setInformativeText("Remove objects smaller than the specified size.")
+        mbox.exec_()
+    
+    def dilation_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Question)
+        mbox.setWindowTitle("Dilation Help")
+        mbox.setText("What does it?")
+        mbox.setInformativeText("Dilation enlarges bright regions and shrinks dark regions.")
+        mbox.exec_()
+    
+    def erosion_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Question)
+        mbox.setWindowTitle("Erosion Help")
+        mbox.setText("What does it?")
+        mbox.setInformativeText("Erosion shrinks bright regions and enlarges dark regions.")
+        mbox.exec_()
+    
+    def open_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Question)
+        mbox.setWindowTitle("Opening Help")
+        mbox.setText("What does it?")
+        mbox.setInformativeText("The morphological opening on an image is defined as an erosion followed by a dilation. Opening can remove small bright spots (i.e. “salt”) and connect small dark cracks. This tends to “open” up (dark) gaps between (bright) features")
+        mbox.exec_()
+    
+    def close_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Question)
+        mbox.setWindowTitle("Closing Help")
+        mbox.setText("What does it?")
+        mbox.setInformativeText("The morphological closing on an image is defined as a dilation followed by an erosion. Closing can remove small dark spots (i.e. “pepper”) and connect small bright cracks. This tends to “close” up (dark) gaps between (bright) features.")
+        mbox.exec_()
+    
+        
     def applyShadow(self):
         shadow = QtWidgets.QGraphicsDropShadowEffect()
         shadow.setBlurRadius(40)
