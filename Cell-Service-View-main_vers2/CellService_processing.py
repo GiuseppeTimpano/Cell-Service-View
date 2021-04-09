@@ -716,194 +716,202 @@ class CellServiceBinaryProcessing(QMainWindow):
             binarymat[mask]=1
         return binarymat
     
-    def control(self):
+    def control(self, number):
+        error=False
         if (self.valore==0):
             self.setEnabled_True_Button()
+        for i in range (0, self.valore):
+            if(self.selezioni[i]==number):
+                self.error_message("Choice already selected, delete one to continue")
+                error=True
+        return error
     
     def set_edit_remove(self):
-        self.control()
-        self.valore=self.valore+1
-        self.selezioni[(self.valore-1)]=1
-        self.Remove_edit.setText(str(self.valore))
+        if(self.control(1)==False):
+            self.valore=self.valore+1
+            self.selezioni[(self.valore-1)]=1
+            self.Remove_edit.setText(str(self.valore))
     
     def set_edit_erosion(self):
-        self.control()
-        self.valore=self.valore+1
-        self.selezioni[(self.valore-1)]=2
-        self.Erosion_edit.setText(str(self.valore))
+        if(self.control(2)==False):
+            self.valore=self.valore+1
+            self.selezioni[(self.valore-1)]=2
+            self.Erosion_edit.setText(str(self.valore))
     
     def set_edit_dilation(self):
-        self.control()
-        self.valore=self.valore+1
-        self.selezioni[(self.valore-1)]=3
-        self.Dilation_edit.setText(str(self.valore))
+        if(self.control(3)==False):
+            self.valore=self.valore+1
+            self.selezioni[(self.valore-1)]=3
+            self.Dilation_edit.setText(str(self.valore))
     
     def set_edit_open(self):
-        self.control()
-        self.valore=self.valore+1
-        self.selezioni[(self.valore-1)]=4
-        self.Open_edit.setText(str(self.valore))
+        if(self.control(4)==False):
+            self.valore=self.valore+1
+            self.selezioni[(self.valore-1)]=4
+            self.Open_edit.setText(str(self.valore))
     
     def set_edit_close(self):
-        self.valore=self.valore+1
-        self.selezioni[(self.valore-1)]=5
-        self.Close_edit.setText(str(self.valore))
+        if(self.control(5)==False):
+            self.valore=self.valore+1
+            self.selezioni[(self.valore-1)]=5
+            self.Close_edit.setText(str(self.valore))
         
     def apply_segmentation(self):
         self.notRed=True
         self.notGreen=True
         self.notBlue=True
+        error=False
         if self.radioRed.isChecked():
             if(self.parent.red_mask is None):
                 self.error_message("Binarize red image")
+                error=True
             if(self.Repeat_Red):
                 self.mask_red=None
         if self.radioGreen.isChecked():
             if(self.parent.green_mask is None):
                 self.error_message("Binarize green image")
+                error=True
             if(self.Repeat_Green):
                 self.mask_green=None
         if self.radioBlue.isChecked():
             if(self.parent.blue_mask is None):
                 self.error_message("Binarize blue image")
+                error=True
             if(self.Repeat_Blue):
                 self.mask_green=None
-        for i in range (0,5):
-            if (self.selezioni[i]==1):
-                raggio=self.Raggio.value()
-                if raggio==0:
-                    self.error_message("Insert a radius!")
-                    pass
-                elif self.radioRed.isChecked():
-                    if(self.mask_red is not None):
-                        self.mask_red= morphology.remove_small_objects(self.mask_red.astype(np.bool), raggio)
-                    else:
-                        self.mask_red= morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
-                    self.notRed=False
-                    self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
-                    print("arrivato in set red")
-                elif self.radioGreen.isChecked():
-                    if(self.mask_green is not None):
-                        self.mask_green= morphology.remove_small_objects(self.mask_green.astype(np.bool), raggio)
-                    else:
-                        self.mask_green= morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
-                    self.notGreen=False
-                    self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-                elif self.radioBlue.isChecked():
+        if (error is False):
+            for i in range (0,5):
+                if (self.selezioni[i]==1):
                     raggio=self.Raggio.value()
-                    if (self.mask_blue is not None):
-                        self.mask_blue= morphology.remove_small_objects(self.mask_blue.astype(np.bool), raggio)
-                    else:
-                        self.mask_blue= morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
-                    self.notBlue=False
-                    self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-            elif (self.selezioni[i]==2):
-                if self.radioRed.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_red=morphology.binary_erosion(self.mask_red)
-                    else:
-                        self.mask_red=morphology.binary_erosion(self.parent.red_mask)
-                    self.notRed=False
-                    self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
-                    print("arrivato in set red 2")
-                if self.radioGreen.isChecked():
-                    if(self.mask_green is not None):
-                        self.mask_green=morphology.binary_erosion(self.mask_green)
-                    else:
-                        self.mask_green=morphology.binary_erosion(self.parent.green_mask)
-                    self.notGreen=False
-                    self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-                if self.radioBlue.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_blue=morphology.binary_erosion(self.mask_blue)
-                    else:
-                        self.mask_blue=morphology.binary_erosion(self.parent.blue_mask)
-                    self.notBlue=False
-                    self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-            elif (self.selezioni[i]==3):
-                if self.radioRed.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_red=morphology.binary_dilation(self.mask_red)
-                    else:
-                        self.mask_red=morphology.binary_dilation(self.parent.red_mask)
-                    self.notRed=False
-                    self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
-                    print("arrivato in set red 3")
-                if self.radioGreen.isChecked():
-                    if(self.mask_green is not None):
-                        self.mask_green=morphology.binary_dilation(self.mask_green)
-                    else:
-                        self.mask_green=morphology.binary_dilation(self.parent.green_mask)
-                    self.notGreen=False
-                    self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-                if self.radioBlue.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_blue=morphology.binary_dilation(self.mask_blue)
-                    else:
-                        self.mask_blue=morphology.binary_dilation(self.parent.blue_mask)
-                    self.notBlue=False
-                    self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-            elif (self.selezioni[i]==4):
-                if self.radioRed.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_red=morphology.binary_opening(self.mask_red)
-                    else:
-                        self.mask_red=morphology.binary_opening(self.parent.red_mask)
-                    self.notRed=False
-                    self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
-                    print("arrivato in set red 4")
-                if self.radioGreen.isChecked():
-                    if(self.mask_green is not None):
-                        self.mask_green=morphology.binary_opening(self.mask_green)
-                    else:
-                        self.mask_green=morphology.binary_opening(self.parent.green_mask)
-                    self.notGreen=False
-                    self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-                if self.radioBlue.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_blue=morphology.binary_opening(self.mask_blue)
-                    else:
-                        self.mask_blue=morphology.binary_opening(self.parent.blue_mask)
-                    self.notBlue=False
-                    self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-            elif (self.selezioni[i]==5):
-                if self.radioRed.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_red=morphology.binary_closing(self.mask_red)
-                    else:
-                        self.mask_red=morphology.binary_closing(self.parent.red_mask)
-                    self.notRed=False
-                    self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
-                    print("arrivato in set red 5")
-                if self.radioGreen.isChecked():
-                    if(self.mask_green is not None):
-                        self.mask_green=morphology.binary_closing(self.mask_green)
-                    else:
-                        self.mask_green=morphology.binary_closing(self.parent.green_mask)
-                    self.notGreen=False
-                    self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-                if self.radioBlue.isChecked():
-                    if(self.mask_blue is not None):
-                        self.mask_blue=morphology.binary_closing(self.mask_blue)
-                    else:
-                        self.mask_blue=morphology.binary_closing(self.parent.blue_mask)
-                    self.notBlue=False
-                    self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-        if self.radioRed.isChecked() and self.notRed:
-            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-        if self.radioGreen.isChecked() and self.notGreen:
-            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-        if self.radioBlue.isChecked() and self.notBlue:
-            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True) 
-        self.Label_Save.setText("Don't forget to save image!")
-        self.Repeat_Red=True
-        self.Repeat_Green=True
-        self.Repeat_Blue=True
-        self.notRed=True
-        self.notGreen=True
-        self.notBlue=True
-        self.clear_edit_label()
-        self.setEnabled_False_Button()
+                    if raggio==0:
+                        self.error_message("Insert a radius!")
+                        error=True
+                    elif (self.radioRed.isChecked() and error==False):
+                        if(self.mask_red is not None):
+                            self.mask_red= morphology.remove_small_objects(self.mask_red.astype(np.bool), raggio)
+                        else:
+                            self.mask_red= morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
+                        self.notRed=False
+                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                    if (self.radioGreen.isChecked() and error==False):
+                        if(self.mask_green is not None):
+                            self.mask_green= morphology.remove_small_objects(self.mask_green.astype(np.bool), raggio)
+                        else:
+                            self.mask_green= morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
+                        self.notGreen=False
+                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                    elif (self.radioBlue.isChecked() and error==False):
+                        raggio=self.Raggio.value()
+                        if (self.mask_blue is not None):
+                            self.mask_blue= morphology.remove_small_objects(self.mask_blue.astype(np.bool), raggio)
+                        else:
+                            self.mask_blue= morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
+                        self.notBlue=False
+                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                elif (self.selezioni[i]==2 and error==False):
+                    if self.radioRed.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_red=morphology.binary_erosion(self.mask_red)
+                        else:
+                            self.mask_red=morphology.binary_erosion(self.parent.red_mask)
+                        self.notRed=False
+                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                    if self.radioGreen.isChecked():
+                        if(self.mask_green is not None):
+                            self.mask_green=morphology.binary_erosion(self.mask_green)
+                        else:
+                            self.mask_green=morphology.binary_erosion(self.parent.green_mask)
+                        self.notGreen=False
+                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                    if self.radioBlue.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_blue=morphology.binary_erosion(self.mask_blue)
+                        else:
+                            self.mask_blue=morphology.binary_erosion(self.parent.blue_mask)
+                        self.notBlue=False
+                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                elif (self.selezioni[i]==3 and error==False):
+                    if self.radioRed.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_red=morphology.binary_dilation(self.mask_red)
+                        else:
+                            self.mask_red=morphology.binary_dilation(self.parent.red_mask)
+                        self.notRed=False
+                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                    if self.radioGreen.isChecked():
+                        if(self.mask_green is not None):
+                            self.mask_green=morphology.binary_dilation(self.mask_green)
+                        else:
+                            self.mask_green=morphology.binary_dilation(self.parent.green_mask)
+                        self.notGreen=False
+                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                    if self.radioBlue.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_blue=morphology.binary_dilation(self.mask_blue)
+                        else:
+                            self.mask_blue=morphology.binary_dilation(self.parent.blue_mask)
+                        self.notBlue=False
+                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                elif (self.selezioni[i]==4 and error==False):
+                    if self.radioRed.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_red=morphology.binary_opening(self.mask_red)
+                        else:
+                            self.mask_red=morphology.binary_opening(self.parent.red_mask)
+                        self.notRed=False
+                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                    if self.radioGreen.isChecked():
+                        if(self.mask_green is not None):
+                            self.mask_green=morphology.binary_opening(self.mask_green)
+                        else:
+                            self.mask_green=morphology.binary_opening(self.parent.green_mask)
+                        self.notGreen=False
+                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                    if self.radioBlue.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_blue=morphology.binary_opening(self.mask_blue)
+                        else:
+                            self.mask_blue=morphology.binary_opening(self.parent.blue_mask)
+                        self.notBlue=False
+                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                elif (self.selezioni[i]==5 and error==False):
+                    if self.radioRed.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_red=morphology.binary_closing(self.mask_red)
+                        else:
+                            self.mask_red=morphology.binary_closing(self.parent.red_mask)
+                        self.notRed=False
+                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                    if self.radioGreen.isChecked():
+                        if(self.mask_green is not None):
+                            self.mask_green=morphology.binary_closing(self.mask_green)
+                        else:
+                            self.mask_green=morphology.binary_closing(self.parent.green_mask)
+                        self.notGreen=False
+                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                    if self.radioBlue.isChecked():
+                        if(self.mask_blue is not None):
+                            self.mask_blue=morphology.binary_closing(self.mask_blue)
+                        else:
+                            self.mask_blue=morphology.binary_closing(self.parent.blue_mask)
+                        self.notBlue=False
+                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
+            if(error==False):
+                if self.radioRed.isChecked() and self.notRed:
+                    self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+                if self.radioGreen.isChecked() and self.notGreen:
+                    self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+                if self.radioBlue.isChecked() and self.notBlue:
+                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True) 
+                self.Label_Save.setText("Don't forget to save image!")
+                self.Repeat_Red=True
+                self.Repeat_Green=True
+                self.Repeat_Blue=True
+                self.notRed=True
+                self.notGreen=True
+                self.notBlue=True
+                self.clear_edit_label()
+                self.setEnabled_False_Button()
     
     def setEnabled_False_Button(self):
         self.Remove_canc.setEnabled(False)
