@@ -30,12 +30,12 @@ class CellService(QMainWindow):
     def setupUi(self):
          # set the window's style
         self.setWindowTitle("CellService")
-        self.setFixedSize(879, 691)
+        self.setFixedSize(1000, 691)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setStyleSheet("background-color: rgb(244, 244, 244);")
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(210, 10, 630, 651))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(310, 10, 630, 651))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
@@ -76,14 +76,14 @@ class CellService(QMainWindow):
         self.principal_layout.addWidget(self.RED_QLabel, 0, 1, 1, 1)
         
         self.option_widget = QtWidgets.QWidget(self.centralwidget)
-        self.option_widget.setGeometry(QtCore.QRect(28, 50, 155, 551))
+        self.option_widget.setGeometry(QtCore.QRect(28, 50, 180, 551))
         self.option_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 40px;")
         self.option_widget.setObjectName("option_widget")
         self.option_widget.setGraphicsEffect(self.applyShadow())
         
         self.open_file_button = QtWidgets.QPushButton(self.option_widget)
-        self.open_file_button.setGeometry(QtCore.QRect(50, 20, 51, 51))
+        self.open_file_button.setGeometry(QtCore.QRect(60, 20, 51, 51))
         self.open_file_button.setMouseTracking(True)
         self.open_file_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.open_file_button.setToolTipDuration(-1)
@@ -118,7 +118,7 @@ class CellService(QMainWindow):
         self.ctrl_open.activated.connect(self.openRGBCall)
         
         self.openSingle_button = QtWidgets.QPushButton(self.option_widget)
-        self.openSingle_button.setGeometry(QtCore.QRect(50, 130, 51, 51))
+        self.openSingle_button.setGeometry(QtCore.QRect(60, 130, 51, 51))
         self.openSingle_button.setMouseTracking(True)
         self.openSingle_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.openSingle_button.setToolTipDuration(-1)
@@ -153,7 +153,7 @@ class CellService(QMainWindow):
         self.ctrl_openSingle.activated.connect(self.openSingleChannelsCall)
         
         self.processing_button = QtWidgets.QPushButton(self.option_widget)
-        self.processing_button.setGeometry(QtCore.QRect(50, 240, 51, 51))
+        self.processing_button.setGeometry(QtCore.QRect(60, 240, 51, 51))
         self.processing_button.setMouseTracking(True)
         self.processing_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.processing_button.setToolTipDuration(-1)
@@ -186,7 +186,7 @@ class CellService(QMainWindow):
         self.processing_button.clicked.connect(self.processingWindow)
         
         self.analisys_button = QtWidgets.QPushButton(self.option_widget)
-        self.analisys_button.setGeometry(QtCore.QRect(50, 350, 51, 51))
+        self.analisys_button.setGeometry(QtCore.QRect(60, 350, 51, 51))
         self.analisys_button.setMouseTracking(True)
         self.analisys_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.analisys_button.setToolTipDuration(-1)
@@ -219,7 +219,7 @@ class CellService(QMainWindow):
         self.analisys_button.clicked.connect(self.analisysWindow)
         
         self.help_button = QtWidgets.QPushButton(self.option_widget)
-        self.help_button.setGeometry(QtCore.QRect(50, 450, 51, 51))
+        self.help_button.setGeometry(QtCore.QRect(60, 450, 51, 51))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.help_button.setToolTipDuration(-1)
@@ -260,8 +260,8 @@ class CellService(QMainWindow):
         self.open_title.setText("Open RGB image")
         
         self.openSingle_title = QtWidgets.QLineEdit(self.option_widget)
-        self.openSingle_title.setGeometry(QtCore.QRect(10, 190, 141, 16))
-        self.openSingle_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
+        self.openSingle_title.setGeometry(QtCore.QRect(10, 190, 161, 16))
+        self.openSingle_title.setStyleSheet("font: 7pt \"Arial\";\n"
 "color: rgb(0, 0, 0);")
         self.openSingle_title.setAlignment(QtCore.Qt.AlignCenter)
         self.openSingle_title.setReadOnly(True)
@@ -269,7 +269,7 @@ class CellService(QMainWindow):
         self.openSingle_title.setText("Open single channels image")
         
         self.analisys_title = QtWidgets.QLineEdit(self.option_widget)
-        self.analisys_title.setGeometry(QtCore.QRect(10, 410, 131, 16))
+        self.analisys_title.setGeometry(QtCore.QRect(20, 410, 131, 16))
         self.analisys_title.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.analisys_title.setStyleSheet("font: 8pt \"Arial\";\n"
 "color: rgb(0, 0, 0);")
@@ -279,7 +279,7 @@ class CellService(QMainWindow):
         self.analisys_title.setText("Analisys")
          
         self.processing_title = QtWidgets.QLineEdit(self.option_widget)
-        self.processing_title.setGeometry(QtCore.QRect(10, 300, 131, 20))
+        self.processing_title.setGeometry(QtCore.QRect(20, 300, 131, 20))
         self.processing_title.setStyleSheet("font: 8pt \"Arial\";\n"
 "color: rgb(0, 0, 0);")
         self.processing_title.setAlignment(QtCore.Qt.AlignCenter)
@@ -288,7 +288,7 @@ class CellService(QMainWindow):
         self.processing_title.setText("Processing")
         
         self.help_title = QtWidgets.QLineEdit(self.option_widget)
-        self.help_title.setGeometry(QtCore.QRect(20, 510, 111, 16))
+        self.help_title.setGeometry(QtCore.QRect(30, 510, 111, 16))
         self.help_title.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.help_title.setStyleSheet("font: 8pt \"Arial\";\n"
 "color: rgb(0, 0, 0);")
@@ -311,7 +311,7 @@ class CellService(QMainWindow):
         return shadow
     
     def processingWindow(self):
-        self.intensityAnalysis = CellService_processing.CellServiceBinaryProcessing(self)
+        self.intensityAnalysis = CellService_processing.Processing_cellService(self)
         self.intensityAnalysis.show()
         
     def analisysWindow(self):
