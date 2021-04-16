@@ -1060,13 +1060,10 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def two_similarity_overlap(self, image1, image2, edit):
         similarity = 0
-        overlapping = np.zeros_like(image1)
-        
-        for i in range(image1.shape[0]):
-            for j in range(image1.shape[1]):
-                if (image1[i][j]==image2[i][j]):
-                    similarity += 1
-                    overlapping[i][j]=1
+        overlapping = np.zeros_like(image1, dtype=np.uint8)
+        mask=np.logical_and(image1==1, image2==1)
+        overlapping[mask]=1
+        similarity=overlapping.sum()
         edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
         return overlapping
     
@@ -1109,15 +1106,11 @@ class Ui_Analisys_cellService(QMainWindow):
         self.convert_npToQimage(image_visualize)
     
     def AllimagesOverlap(self):
-        similarity=0
-        overlapping = np.zeros_like(self.parent.red_mask)
-        for i in range(self.parent.red_mask.shape[0]):
-          for j in range(self.parent.red_mask.shape[1]):
-              if (self.parent.red_mask[i][j]==1 and self.parent.green_mask[i][j]==1 
-                  and self.parent.blue_mask[i][j]==1):
-                          overlapping[i][j]=1
-                          similarity+=1
-                          
+        similarity = 0
+        overlapping = np.zeros_like(self.parent.red_mask, dtype=np.uint8)
+        mask=np.logical_and(self.parent.red_mask==1, self.parent.green_mask==1, self.parent.blue_mask==1)
+        overlapping[mask]=1
+        similarity=overlapping.sum()                          
         self.RGB_Label.setScaledContents(True)
         self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
         return overlapping
