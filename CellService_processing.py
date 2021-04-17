@@ -9,12 +9,12 @@ class Processing_cellService(QMainWindow):
     def __init__(self, parent):
         super().__init__()
         
-        self.local_red_mask=None
+        '''self.local_red_mask=None
         self.local_green_mask=None
         self.local_blue_mask=None
         self.mask_red=None
         self.mask_green=None
-        self.mask_blue=None
+        self.mask_blue=None'''
         self.filtred_red_mask=None
         self.filtred_green_mask=None
         self.filtred_blue_mask=None
@@ -911,189 +911,94 @@ class Processing_cellService(QMainWindow):
             self.Close_edit.setText(str(self.valore))
         
     def apply_segmentation(self):
-        self.notRed=True
-        self.notGreen=True
-        self.notBlue=True
+        #self.notRed=True
+        #self.notGreen=True
+        #self.notBlue=True
         error=False
+        for i in range (0,5):
+            if(self.selezioni[i]==1):
+                raggio=self.Raggio.value()
+                if raggio==0:
+                    self.error_message("Insert a radius!")
+                    error=True
         if self.radioRed.isChecked():
             if(self.parent.red_mask is None):
                 self.error_message("Binarize red image")
                 error=True
-            if(self.Repeat_Red):
-                self.mask_red=None
         if self.radioGreen.isChecked():
             if(self.parent.green_mask is None):
                 self.error_message("Binarize green image")
                 error=True
-            if(self.Repeat_Green):
-                self.mask_green=None
         if self.radioBlue.isChecked():
             if(self.parent.blue_mask is None):
                 self.error_message("Binarize blue image")
                 error=True
-            if(self.Repeat_Blue):
-                self.mask_green=None
         if (error is False):
             if(self.radioRed.isChecked()):
-                if(self.mask_red is not None):
-                    self.filtred_red_mask=self.mask_red
-                else:
-                    self.filtred_red_mask=self.parent.red_mask
+                self.filtred_red_mask=self.parent.red_mask
                 self.Undo_button.setEnabled(True)
             if(self.radioGreen.isChecked()):
-                if(self.mask_green is not None):
-                    self.filtred_green_mask=self.mask_green
-                else:
-                    self.filtred_green_mask=self.parent.green_mask
+                self.filtred_green_mask=self.parent.green_mask
                 self.Undo_button.setEnabled(True)
             if(self.radioBlue.isChecked()):
-                if(self.mask_blue is not None):
-                    self.filtred_blue_mask=self.mask_blue
-                else:
-                    self.filtred_blue_mask=self.parent.blue_mask
+                self.filtred_blue_mask=self.parent.blue_mask
                 self.Undo_button.setEnabled(True)
             for i in range (0,5):
                 if (self.selezioni[i]==1):
-                    raggio=self.Raggio.value()
-                    if raggio==0:
-                        self.error_message("Insert a radius!")
-                        error=True
-                    elif (self.radioRed.isChecked() and error==False):
-                        if(self.mask_red is not None):
-                            self.mask_red= morphology.remove_small_objects(self.mask_red.astype(np.bool), raggio)
-                        else:
-                            self.mask_red= morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                    if (self.radioRed.isChecked() and error==False):
+                        self.parent.red_mask= morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
                     if (self.radioGreen.isChecked() and error==False):
-                        if(self.mask_green is not None):
-                            self.mask_green= morphology.remove_small_objects(self.mask_green.astype(np.bool), raggio)
-                        else:
-                            self.mask_green= morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-                    elif (self.radioBlue.isChecked() and error==False):
-                        raggio=self.Raggio.value()
-                        if (self.mask_blue is not None):
-                            self.mask_blue= morphology.remove_small_objects(self.mask_blue.astype(np.bool), raggio)
-                        else:
-                            self.mask_blue= morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                        self.parent.green_mask= morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
+                    if (self.radioBlue.isChecked() and error==False):
+                        self.parent.blue_mask= morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
                 elif (self.selezioni[i]==2 and error==False):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_erosion(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_erosion(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_erosion(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_erosion(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_erosion(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_erosion(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_erosion(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_erosion(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                        self.parent.blue_mask=morphology.binary_erosion(self.parent.blue_mask)
                 elif (self.selezioni[i]==3 and error==False):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_dilation(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_dilation(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_dilation(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_dilation(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_dilation(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_dilation(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_dilation(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_dilation(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                        self.parent.blue_mask=morphology.binary_dilation(self.parent.blue_mask)
                 elif (self.selezioni[i]==4 and error==False):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_opening(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_opening(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_opening(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_opening(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_opening(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_opening(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_opening(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_opening(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
+                        self.parent.blue_mask=morphology.binary_opening(self.parent.blue_mask)
                 elif (self.selezioni[i]==5 and error==False):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_closing(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_closing(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_closing(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_closing(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_closing(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_closing(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_closing(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_closing(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
+                        self.parent.blue_mask=morphology.binary_closing(self.parent.blue_mask)
             if(error==False):
-                if self.radioRed.isChecked() and self.notRed:
+                if self.radioRed.isChecked():
                     self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-                if self.radioGreen.isChecked() and self.notGreen:
+                if self.radioGreen.isChecked():
                     self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-                if self.radioBlue.isChecked() and self.notBlue:
-                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True) 
-                self.Repeat_Red=True
-                self.Repeat_Green=True
-                self.Repeat_Blue=True
-                self.notRed=True
-                self.notGreen=True
-                self.notBlue=True
+                if self.radioBlue.isChecked():
+                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
                 self.clear_edit_label()
                 self.setEnabled_False_Button()
     
     def back(self):
         if(self.radioRed.isChecked()):
-            self.mask_red=self.filtred_red_mask
-            self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+            self.parent.red_mask=self.filtred_red_mask
+            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
         if(self.radioGreen.isChecked()):
-            self.mask_green=self.filtred_green_mask
-            self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+            self.parent.green_mask=self.filtred_green_mask
+            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         if(self.radioBlue.isChecked()):
-            self.mask_blue=self.filtred_blue_mask
-            self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
+            self.parent.blue_mask=self.filtred_blue_mask
+            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
         self.Undo_button.setEnabled(False)
         
     
@@ -1184,12 +1089,6 @@ class Processing_cellService(QMainWindow):
             self.error_message("Attention: the images haven't been binarized")
     
     def Clear_filtred_label(self):
-        if (self.local_red_mask is not None):
-            self.parent.red_mask = self.local_red_mask
-        if (self.local_green_mask is not None):
-            self.parent.green_mask = self.local_green_mask
-        if (self.local_blue_mask is not None):
-            self.parent.blue_mask = self.local_blue_mask
         self.Filtred_Label.clear()
         self.Filtred_Label1.clear()
         self.Filtred_Label2.clear()
@@ -1213,15 +1112,6 @@ class Processing_cellService(QMainWindow):
         mbox.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
         returnValue = mbox.exec()
         if returnValue == QMessageBox.Save:
-            if(self.mask_red is not None):
-                self.local_red_mask= self.parent.red_mask
-                self.parent.red_mask = self.mask_red
-            if(self.mask_green is not None):
-                self.local_green_mask= self.parent.green_mask
-                self.parent.green_mask = self.mask_green
-            if(self.mask_blue is not None):
-                self.local_blue_mask= self.parent.blue_mask
-                self.parent.blue_mask = self.mask_blue
             self.set_all_mask()
         else:
             pass
