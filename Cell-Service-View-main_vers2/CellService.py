@@ -274,7 +274,7 @@ class CellService(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.8))
+        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.8))
         self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen.height()*0.93), int(screen.height()*0.73)))
         self.RED_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
         self.GREEN_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
@@ -352,7 +352,14 @@ class CellService(QMainWindow):
         blue_channel_file_name = QFileDialog.getOpenFileName(self, 'Open blue channel')
         if blue_channel_file_name[0]:
             self.blue_image = skimage.io.imread(blue_channel_file_name[0])[:,:,2].astype(np.uint8)
-
+        
+        if self.red_image is None:
+            self.error_message("Missing red image.")
+        if self.green_image is None:
+            self.error_message("Missing green image.")
+        if self.blue_image is None:
+            self.error_message("Missing blue image.")
+        
         # Manage if the user do not open three channels
         # Figure out image shape (even if a single image has been open)
         '''if self.red_image is not None:
@@ -379,7 +386,7 @@ class CellService(QMainWindow):
             self.red_image = None
             self.green_image = None
             self.blue_image = None
-            return'''
+            retrurn'''
 
         # RGB
         if (self.red_image is not None and self.green_image is not None and self.blue_image is not None):
