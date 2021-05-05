@@ -274,7 +274,7 @@ class CellService(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.8))
+        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.85))
         self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen.height()*0.93), int(screen.height()*0.73)))
         self.RED_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
         self.GREEN_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
