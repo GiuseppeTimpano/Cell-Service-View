@@ -39,7 +39,6 @@ class CellService(QMainWindow):
         self.GREEN_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
         self.GREEN_QLabel.setStyleSheet("border: 3px solid green")
         self.GREEN_QLabel.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.GREEN_QLabel.setFixedSize(465,415)
         self.GREEN_QLabel.setFrameShadow(QtWidgets.QFrame.Plain)
         self.GREEN_QLabel.setLineWidth(2)
         self.GREEN_QLabel.setScaledContents(True)
@@ -275,7 +274,12 @@ class CellService(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
+        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.9))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen.height()*0.93), int(screen.height()*0.73)))
+        self.RED_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
+        self.GREEN_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
+        self.BLUE_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
+        self.RGB_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
     
     def processingWindow(self):
         if (self.red_image is None and self.green_image is None and self.blue_image is None):
@@ -351,7 +355,7 @@ class CellService(QMainWindow):
 
         # Manage if the user do not open three channels
         # Figure out image shape (even if a single image has been open)
-        if self.red_image is not None:
+        '''if self.red_image is not None:
             matrix_shape = self.red_image.shape
         elif self.green_image is not None:
             matrix_shape = self.green_image.shape
@@ -362,7 +366,7 @@ class CellService(QMainWindow):
             return
 
         # if a channel was not open create zeros matrix
-        '''if self.red_image is None:
+        if self.red_image is None:
             self.red_image = np.zeros(matrix_shape, dtype=np.uint8)
         if self.green_image is None:
             self.green_image = np.zeros(matrix_shape, dtype=np.uint8)
