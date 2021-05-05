@@ -24,10 +24,10 @@ class Processing_cellService(QMainWindow):
         self.setStatusBar(self.statusbar)
         
     def setupUI(self):
-        self.setFixedSize(1130, 786)
+        self.setFixedSize(1130, 690)
         self.principal_widget = QtWidgets.QWidget()
         self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(280, 50, 521, 630))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(280, 40, 521, 630))
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         
@@ -79,20 +79,20 @@ class Processing_cellService(QMainWindow):
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
         self.radioRed.setText("Red Image")
         self.radioRed.setChecked(True)
-        self.radioRed.setGeometry(QtCore.QRect(320, 20, 101, 20))
+        self.radioRed.setGeometry(QtCore.QRect(320, 10, 101, 20))
         self.radioRed.setStyleSheet("font: 8pt \"Arial\";\n" "color: red;\n")
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
         self.radioGreen.setText("Green Image")
-        self.radioGreen.setGeometry(QtCore.QRect(490, 20, 101, 20))
+        self.radioGreen.setGeometry(QtCore.QRect(490, 10, 101, 20))
         self.radioGreen.setStyleSheet("font: 8pt \"Arial\";\n" "color: Green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioBlue.setGeometry(QtCore.QRect(670, 20, 101, 20))
+        self.radioBlue.setGeometry(QtCore.QRect(670, 10, 101, 20))
         self.radioBlue.setStyleSheet("font: 8pt \"Arial\";\n" "color: Blue;")
         self.radioBlue.setText("Blue Image")
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGraphicsEffect(self.applyShadow())
-        self.help_button.setGeometry(QtCore.QRect(880, 670, 41, 41))
+        self.help_button.setGeometry(QtCore.QRect(875, 625, 41, 41))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.help_button.setStyleSheet("QPushButton {\n"
@@ -120,7 +120,7 @@ class Processing_cellService(QMainWindow):
        
         self.save_button = QtWidgets.QPushButton(self.principal_widget)
         self.save_button.setGraphicsEffect(self.applyShadow())
-        self.save_button.setGeometry(QtCore.QRect(950, 670, 41, 41))
+        self.save_button.setGeometry(QtCore.QRect(945, 625, 41, 41))
         self.save_button.setMouseTracking(True)
         self.save_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.save_button.setStyleSheet("QPushButton {\n"
@@ -150,7 +150,7 @@ class Processing_cellService(QMainWindow):
         self.delete_button.setGraphicsEffect(self.applyShadow())
         self.delete_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Delete </span></p></body></html>")
         self.delete_button.setStatusTip("Delete")
-        self.delete_button.setGeometry(QtCore.QRect(1020, 670, 41, 41))
+        self.delete_button.setGeometry(QtCore.QRect(1015, 625, 41, 41))
         self.delete_button.setMouseTracking(True)
         self.delete_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.delete_button.setToolTipDuration(-1)
@@ -182,7 +182,7 @@ class Processing_cellService(QMainWindow):
 
     def set_segmentation(self):
         self.segmentation_widget = QtWidgets.QWidget(self.principal_widget)
-        self.segmentation_widget.setGeometry(QtCore.QRect(840, 15, 245, 630))
+        self.segmentation_widget.setGeometry(QtCore.QRect(840, 15, 245, 600))
         self.segmentation_widget.setGraphicsEffect(self.applyShadow())
         self.segmentation_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 35px;")
         icon3 = QtGui.QIcon()
@@ -193,14 +193,14 @@ class Processing_cellService(QMainWindow):
         self.Add_button.setStatusTip("Add Changes to the filtred image")
         self.Add_button.clicked.connect(self.apply_segmentation)
         self.Add_button.setGraphicsEffect(self.applyShadow())
-        self.Add_button.setGeometry(QtCore.QRect(50, 470, 41, 41))
+        self.Add_button.setGeometry(QtCore.QRect(50, 470, 35, 35))
         self.Add_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Add_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
             "    border-style: outset;\n"
             "    border: 2px;\n"
             "    border-width: 1px;\n"
-            "    border-radius: 20px;\n"
+            "    border-radius: 10px;\n"
             "    border-color: beige;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
@@ -209,7 +209,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         self.Add_button.setIcon(icon3)
-        self.Add_button.setIconSize(QtCore.QSize(30, 35))
+        self.Add_button.setIconSize(QtCore.QSize(15, 10))
         icon_not = QtGui.QIcon()
         icon_not.addPixmap(QtGui.QPixmap("Icon/not_accept.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.No_button = QtWidgets.QPushButton(self.segmentation_widget)
@@ -217,14 +217,14 @@ class Processing_cellService(QMainWindow):
         self.No_button.setStatusTip("Not Changed")
         self.No_button.clicked.connect(self.clear_edit_label)
         self.No_button.setGraphicsEffect(self.applyShadow())
-        self.No_button.setGeometry(QtCore.QRect(150, 470, 41, 41))
+        self.No_button.setGeometry(QtCore.QRect(150, 470, 35, 35))
         self.No_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.No_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
             "    border-style: outset;\n"
             "    border: 2px;\n"
             "    border-width: 1px;\n"
-            "    border-radius: 20px;\n"
+            "    border-radius: 10px;\n"
             "    border-color: beige;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
@@ -233,20 +233,20 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         self.No_button.setIcon(icon_not)
-        self.No_button.setIconSize(QtCore.QSize(30, 35))
+        self.No_button.setIconSize(QtCore.QSize(10, 15))
         self.Undo_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Undo_button.setGraphicsEffect(self.applyShadow())
         self.Undo_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Undo Change</span></p></body></html>")
         self.Undo_button.setStatusTip("Undo change")
         self.Undo_button.clicked.connect(self.back)
-        self.Undo_button.setGeometry(QtCore.QRect(100, 550, 41, 41))
+        self.Undo_button.setGeometry(QtCore.QRect(100, 535, 35, 35))
         self.Undo_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Undo_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
             "    border-style: outset;\n"
             "    border: 2px;\n"
             "    border-width: 1px;\n"
-            "    border-radius: 20px;\n"
+            "    border-radius: 10px;\n"
             "    border-color: beige;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
@@ -257,7 +257,7 @@ class Processing_cellService(QMainWindow):
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap("Icon/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Undo_button.setIcon(icon4)
-        self.Undo_button.setIconSize(QtCore.QSize(30, 35))
+        self.Undo_button.setIconSize(QtCore.QSize(10, 15))
 
         self.Remove_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Remove_button.setGeometry(QtCore.QRect(30, 130, 41, 41))
@@ -628,16 +628,16 @@ class Processing_cellService(QMainWindow):
         self.Close_edit.setReadOnly(True)
         
         self.Add_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.Add_title.setGeometry(QtCore.QRect(30, 513, 91, 21))
+        self.Add_title.setGeometry(QtCore.QRect(30, 508, 91, 21))
         self.Add_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Add_title.setText("Apply Change")
         self.No_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.No_title.setGeometry(QtCore.QRect(140, 513, 91, 21))
+        self.No_title.setGeometry(QtCore.QRect(140, 508, 91, 21))
         self.No_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.No_title.setText("Not Change")
         
         self.undo_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.undo_title.setGeometry(QtCore.QRect(90, 593, 121, 21))
+        self.undo_title.setGeometry(QtCore.QRect(90, 573, 121, 21))
         self.undo_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.undo_title.setText("Undo Change")
         
@@ -1169,5 +1169,3 @@ class Processing_cellService(QMainWindow):
         mbox.setText("Processing")
         mbox.setInformativeText ("In the field of image processing, the ability to distinguish different objects, shapes and contours present in the image under analysis plays a fundamental role. This is possible thanks to thresholding techniques: techniques that consider pixels with intensity higher than a minimum threshold and, if this is present, lower than a maximum threshold. In this case, the threshold can be set by the user (choosing a minimum threshold and a maximum threshold of intensity of the pixels to be considered). If you don't know which one to choose, you can use the automatic threshold method: this uses the Otsu threshold to choose a minimum threshold, but does not set any maximum threshold. Remember to choose the image to binarize before applying the threshold to the images and to confirm the choice with the Binarize image button to apply the thresholding.")
         mbox.exec_()
-    
-

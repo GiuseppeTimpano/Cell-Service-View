@@ -37,7 +37,7 @@ class CellService(QMainWindow):
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         
         self.GREEN_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.GREEN_QLabel.setStyleSheet("border: 3px solid green")
+        self.GREEN_QLabel.setStyleSheet("border: 2px solid green")
         self.GREEN_QLabel.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.GREEN_QLabel.setFrameShadow(QtWidgets.QFrame.Plain)
         self.GREEN_QLabel.setLineWidth(2)
@@ -45,20 +45,20 @@ class CellService(QMainWindow):
         self.principal_layout.addWidget(self.GREEN_QLabel, 1, 0, 1, 1)
         
         self.RGB_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.RGB_QLabel.setStyleSheet("border: 3px solid black")
+        self.RGB_QLabel.setStyleSheet("border: 2px solid black")
         self.RGB_QLabel.setFixedSize(465,415)
         self.RGB_QLabel.setScaledContents(True)
         self.principal_layout.addWidget(self.RGB_QLabel, 0, 0, 1, 1)
         
         self.BLUE_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.BLUE_QLabel.setStyleSheet("border: 3px solid blue")
+        self.BLUE_QLabel.setStyleSheet("border: 2px solid blue")
         self.BLUE_QLabel.setFixedSize(465,415)
         self.BLUE_QLabel.setScaledContents(True)
         self.principal_layout.addWidget(self.BLUE_QLabel, 1, 1, 1, 1)
         
         self.RED_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
         self.RED_QLabel.setTabletTracking(True)
-        self.RED_QLabel.setStyleSheet("border: 3px solid red")
+        self.RED_QLabel.setStyleSheet("border: 2px solid red")
         self.RED_QLabel.setFrameShape(QtWidgets.QFrame.Panel)
         self.RED_QLabel.setFixedSize(465,415)
         self.RED_QLabel.setLineWidth(2)
@@ -390,6 +390,7 @@ class CellService(QMainWindow):
 
     def error_message(self, text_error):
         msg = QMessageBox(self)
+        msg.setFixedSize(200, 200)
         msg.setIcon(QMessageBox.Critical)
         msg.setText("Error")
         msg.setInformativeText(text_error)
@@ -402,4 +403,3 @@ if __name__ == "__main__":
     MainWindow.show()
     sys.exit(app.exec_())
     
-    self.option_widget
