@@ -66,7 +66,7 @@ class CellService(QMainWindow):
         self.principal_layout.addWidget(self.RED_QLabel, 0, 1, 1, 1)
         
         self.option_widget = QtWidgets.QWidget(self.centralwidget)
-        self.option_widget.setGeometry(QtCore.QRect(28, 50, 180, 551))
+        self.option_widget.setGeometry(QtCore.QRect(28, 30, 180, 551))
         self.option_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 40px;")
         self.option_widget.setGraphicsEffect(self.applyShadow())
         
@@ -274,7 +274,7 @@ class CellService(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.85))
+        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.8))
         self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen.height()*0.93), int(screen.height()*0.73)))
         self.RED_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
         self.GREEN_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
@@ -352,14 +352,7 @@ class CellService(QMainWindow):
         blue_channel_file_name = QFileDialog.getOpenFileName(self, 'Open blue channel')
         if blue_channel_file_name[0]:
             self.blue_image = skimage.io.imread(blue_channel_file_name[0])[:,:,2].astype(np.uint8)
-        
-        if self.red_image is None:
-            self.error_message("Missing red image.")
-        if self.green_image is None:
-            self.error_message("Missing green image.")
-        if self.blue_image is None:
-            self.error_message("Missing blue image.")
-        
+
         # Manage if the user do not open three channels
         # Figure out image shape (even if a single image has been open)
         '''if self.red_image is not None:
@@ -386,7 +379,7 @@ class CellService(QMainWindow):
             self.red_image = None
             self.green_image = None
             self.blue_image = None
-            retrurn'''
+            return'''
 
         # RGB
         if (self.red_image is not None and self.green_image is not None and self.blue_image is not None):
@@ -408,3 +401,5 @@ if __name__ == "__main__":
     MainWindow = CellService()
     MainWindow.show()
     sys.exit(app.exec_())
+    
+    self.option_widget
