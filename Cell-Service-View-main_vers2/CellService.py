@@ -222,6 +222,7 @@ class CellService(QMainWindow):
         self.help_button.setIconSize(QtCore.QSize(60, 55))
         self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help page</span></p></body></html>")
         self.help_button.setStatusTip("Help page")
+        self.help_button.clicked.connect(self.help_message)
         
         self.open_title = QtWidgets.QLineEdit(self.option_widget)
         self.open_title.setGeometry(QtCore.QRect(10, 80, 141, 20))
@@ -396,6 +397,14 @@ class CellService(QMainWindow):
         msg.setInformativeText(text_error)
         msg.setWindowTitle("Error")
         msg.exec_()
+    
+    def help_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Information)
+        mbox.setWindowTitle("Help")
+        mbox.setText("Cell Service")
+        mbox.setInformativeText ("Application for image analysis. Insert the image in RGB format or the individual channels (red, green and blue) to continue. Alternatively, you can also open a single channel but you can only take advantage of the intensity, percentage of biological content and count functions. Remember that before the analysis you have to do the processing operation.")
+        mbox.exec_()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

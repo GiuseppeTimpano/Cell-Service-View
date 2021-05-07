@@ -111,7 +111,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("Icon/help_page.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("Icon/help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.help_button.setIcon(icon2)
         self.help_button.setIconSize(QtCore.QSize(65, 30))
         self.help_button.clicked.connect(self.help_message)
@@ -170,7 +170,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("Icon/canc_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("Icon/canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.delete_button.setIcon(icon1)
         self.delete_button.setIconSize(QtCore.QSize(35, 30))
         self.delete_button.clicked.connect(self.deleteall_message)
@@ -277,7 +277,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("Icon/icon n 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("Icon/remove small object.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Remove_button.setIcon(icon)
         self.Remove_button.clicked.connect(self.set_edit_remove)
         self.Remove_button.setGraphicsEffect(self.applyShadow())
@@ -302,7 +302,9 @@ class Processing_cellService(QMainWindow):
             "    border-style: inset;\n"
             "}")
         self.Erosion_button.setGraphicsEffect(self.applyShadow())
-        self.Erosion_button.setIcon(icon)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("Icon/riduce spazi bianchi.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Erosion_button.setIcon(icon2)
         self.Erosion_button.setIconSize(QtCore.QSize(60, 35))
         self.Erosion_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Erosion</p></body></html>")
         self.Erosion_button.setStatusTip("Erosion")
@@ -325,11 +327,14 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.Dilation_button.setIcon(icon)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("Icon/riduce spazi neri.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Dilation_button.setIcon(icon3)
         self.Dilation_button.clicked.connect(self.set_edit_dilation)
         self.Dilation_button.setToolTip( "<html><head/><body><p><span style=\" color:#80b7ff;\">Dilation</p></body></html>")
         self.Dilation_button.setStatusTip("Dilation")
         self.Dilation_button.setIconSize(QtCore.QSize(60, 35))
+        
         self.Open_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Open_button.setGraphicsEffect(self.applyShadow())
         self.Open_button.setGeometry(QtCore.QRect(30, 340, 41, 41))
@@ -348,7 +353,9 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.Open_button.setIcon(icon)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("Icon/rimuove i piccoli spots e connette zone scure.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Open_button.setIcon(icon4)
         self.Open_button.setIconSize(QtCore.QSize(60, 35))
         self.Open_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Opening</span></p></body></html>")
         self.Open_button.setStatusTip("Opening")
@@ -370,7 +377,9 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.Close_button.setIcon(icon)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("Icon/closing.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Close_button.setIcon(icon5)
         self.Close_button.setIconSize(QtCore.QSize(60, 35))
         self.Close_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Closing</span></p></body></html>")
         self.Close_button.setStatusTip("Closing")

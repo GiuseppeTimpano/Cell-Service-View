@@ -1111,9 +1111,9 @@ class Ui_Analisys_cellService(QMainWindow):
         mbox.setWindowTitle("Confirm")
         mbox.setText("You are deleting image analysis")
         mbox.setInformativeText("Do you want to delate your analysis?")
-        mbox.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
+        mbox.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         returnValue = mbox.exec()
-        if returnValue == QMessageBox.Save:
+        if returnValue == QMessageBox.Yes:
             self.clearAll()
         else:
             pass
@@ -1155,8 +1155,8 @@ class Ui_Analisys_cellService(QMainWindow):
     def help_message(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
-        msg.setText("This is a message box")
-        msg.setWindowTitle("MessageBox demo")
+        msg.setText("Function information")
+        msg.setWindowTitle("Function information")
         msg.setText("INTERSECT FUNCTION: the intersection function overlaps images and returns an image whose colors represent the parts in common between the images themselves. \
                                                                                                                DENSITY FUNCTION: density is a function that returns the percentage and number of pixels of the biological content in the image \
                                                                                      NUMBER OF ISLANDS FUNCTION: returns an approximate number of cells in the image. It is necessary to perform the image processing operation in the best way, to obtain a more reliable result. \
