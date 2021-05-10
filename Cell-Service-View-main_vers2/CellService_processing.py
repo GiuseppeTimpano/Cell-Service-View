@@ -186,7 +186,7 @@ class Processing_cellService(QMainWindow):
         self.segmentation_widget.setGraphicsEffect(self.applyShadow())
         self.segmentation_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 35px;")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/accept.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("Icon/save changes.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 
         self.Add_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Add_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Add Changes to the filtred image</span></p></body></html>")
@@ -209,9 +209,9 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         self.Add_button.setIcon(icon3)
-        self.Add_button.setIconSize(QtCore.QSize(15, 10))
+        self.Add_button.setIconSize(QtCore.QSize(40, 55))
         icon_not = QtGui.QIcon()
-        icon_not.addPixmap(QtGui.QPixmap("Icon/not_accept.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon_not.addPixmap(QtGui.QPixmap("Icon/non confermare.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.No_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.No_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Not Changes to the filtred image</span></p></body></html>")
         self.No_button.setStatusTip("Not Changed")
@@ -233,7 +233,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         self.No_button.setIcon(icon_not)
-        self.No_button.setIconSize(QtCore.QSize(10, 15))
+        self.No_button.setIconSize(QtCore.QSize(40, 55))
         self.Undo_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Undo_button.setGraphicsEffect(self.applyShadow())
         self.Undo_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Undo Change</span></p></body></html>")
@@ -255,9 +255,9 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("Icon/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("Icon/undo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Undo_button.setIcon(icon4)
-        self.Undo_button.setIconSize(QtCore.QSize(10, 15))
+        self.Undo_button.setIconSize(QtCore.QSize(40, 55))
 
         self.Remove_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Remove_button.setGeometry(QtCore.QRect(30, 130, 41, 41))
